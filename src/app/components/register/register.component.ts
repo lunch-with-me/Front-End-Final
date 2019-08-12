@@ -47,7 +47,7 @@ export class RegisterComponent implements OnInit {
           this.authService.authenticateUser(this.registerForm.value)
           .subscribe(data => {
             if (data.success == true) {
-              this.authService.storeUserData(data.token, data.user);
+              this.authService.storeUserData(data.token, data.user, data.email);
               localStorage.setItem("email", this.registerForm.value['email']);
               this.router.navigate(["/registerdetails"]);
             } else {

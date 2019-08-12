@@ -41,6 +41,8 @@ export class HomeComponent implements OnInit {
     private chatService: ChatService
   ) { }
 
+  new = false;
+
   ngOnInit() {
     let userData = this.authService.getUserData();
     this.username = userData.user.username;
@@ -56,6 +58,11 @@ export class HomeComponent implements OnInit {
     this.getMessages(this.chatWith);
 
     this.connectToChat();
+
+    if(!localStorage.getItem('timeF')){
+      this.new = true;
+      this.router.navigateByUrl('/find');
+    }
 
   }
 

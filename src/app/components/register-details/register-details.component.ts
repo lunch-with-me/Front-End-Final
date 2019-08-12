@@ -59,6 +59,12 @@ export class RegisterDetailsComponent implements OnInit {
         //interest:new FormControl(null, Validators.required),
         //image:new FormControl(null),
           });
+          this.myProf = val['myProf'];
+          this.intProf = val['intProf'];
+          for(var i of val['interest']){
+            this.Interest[i] = true;
+          }
+          this.b64 = val['image'];
         }
       },
       error => console.log(error)
@@ -142,7 +148,7 @@ console.log("send data - "+JSON.stringify(obj))
    // console.log(JSON.stringify(this.registerForm.value));
 .subscribe(
   data=>{console.log(data);
-    localStorage.removeItem("email")
+    //localStorage.removeItem("email")
     this.router.navigate(["/login"]);
 
     error=>console.error(error)

@@ -66,9 +66,10 @@ export class AuthService {
 
 
 
-  storeUserData(token, user): void {
+  storeUserData(token, user, email): void {
     localStorage.setItem("token", token);
     localStorage.setItem("user", JSON.stringify(user));
+    localStorage.setItem("email", email);
     this.authToken = token;
     this.user = user;
   }

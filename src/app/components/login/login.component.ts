@@ -43,7 +43,8 @@ export class LoginComponent implements OnInit {
     this.authService.authenticateUser(this.loginForm.value)
       .subscribe(data => {
         if (data.success == true) {
-          this.authService.storeUserData(data.token, data.user);
+          //console.log(data.email);
+          this.authService.storeUserData(data.token, data.user, data.email);
           this.chatService.connect(data.user.username);
           this.router.navigate(["/map"]);
         } else {

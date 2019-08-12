@@ -119,6 +119,10 @@ export class MapComponent implements OnInit {
 //     error=>console.error(error)
 //   }
 // )  
+this.http.post('http://localhost:8080/users/meet', {'timeF': this.timeF, 'timeT': this.timeT, 'pickupLng': this.location.lng.toString(), 'pickupLat': this.location.lat.toString(), 'email': localStorage.getItem('email')},{ headers: new HttpHeaders({Authorization: localStorage.getItem('token')}) } ).subscribe(
+      data => console.log(data),
+      error => console.log(error)
+    );
 
     this.api.map(this.location.lat, this.location.lng,).subscribe(
       data => {
