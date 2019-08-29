@@ -104,4 +104,42 @@ export class AuthService {
     return body || { };
   }
 
+
+  //getSugestedProfileDetails
+  frienddetails(id, username){
+    let url: string = this.apiUrl + '/getSugestedProfileDetails/' + id
+    let headers = new Headers({
+      "Content-Type": "application/json",
+    });
+    let options = new RequestOptions({ headers: headers });
+    let observableReq = this.http.get(url, options).map((respon , index )=>{
+      console.log(respon)
+      var datata = this.extractData(respon)
+      console.log(datata.username)
+    })
+  console.log("getSugestedProfileDetails")
+  console.log(this.extractData)
+  return observableReq;
+
+
+  }
+
+  getuserdetails():  any {
+    let url: string = this.apiUrl + "/userdetails/:id/:username";
+    // prepare the request
+    let headers = new Headers({
+      "Content-Type": "application/json",
+      "Authorization": this.authToken
+    });
+    let options = new RequestOptions({ headers: headers });
+
+    // POST
+    let observableReq = this.http.get(url, options)
+                                 .map(this.extractData);
+
+    return observableReq;
+  }
+
+  
+  
 }

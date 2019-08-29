@@ -18,6 +18,7 @@ export class ApiService {
   }
 
 
+
   active()
   {
     return this._http.put(this.host + 'users/active',{});
@@ -37,6 +38,11 @@ submitRegi(body:any){
     headers:new HttpHeaders().append('Content-Type','application/json')
   });
 }
-
-
+getfrienddetails(){
+ 
+ return this._http.get(this.host + 'users/getSugestedProfileDetails/:_id',{
+    observe:'body',
+    headers:new HttpHeaders().append('Content-Type','application/json')
+  });
+}
 }

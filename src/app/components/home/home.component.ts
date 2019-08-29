@@ -5,6 +5,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Message } from "../../models/message.model";
 import { ChatService } from "../../services/chat.service";
 import { AuthService } from "../../services/auth.service";
+import { ApiService } from "../../services/api.service";
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -19,7 +20,10 @@ export class HomeComponent implements OnInit {
   showActive: boolean;
   sendForm: FormGroup;
   username: string;
+  id:string;
+  message:String;
   chatWith: string;
+  gender: String;
   currentOnline: boolean;
   receiveMessageObs: any;
   receiveActiveObs: any;
@@ -38,11 +42,10 @@ export class HomeComponent implements OnInit {
     private formBuilder: FormBuilder,
     private el: ElementRef,
     private authService: AuthService,
+    private apiService: ApiService,
     private chatService: ChatService
   ) { }
-
-  new = false;
-
+new = false;
   ngOnInit() {
     let userData = this.authService.getUserData();
     this.username = userData.user.username;
@@ -58,11 +61,6 @@ export class HomeComponent implements OnInit {
     this.getMessages(this.chatWith);
 
     this.connectToChat();
-
-    if(!localStorage.getItem('timeF')){
-      this.new = true;
-      this.router.navigateByUrl('/find');
-    }
 
   }
 
@@ -84,7 +82,8 @@ export class HomeComponent implements OnInit {
       error => console.log(error)
     );
   }
-
+  
+//accept request
   acceptRequest(id, username){
     console.log(username);
     this.chatService.acceptRequest(id, username).subscribe(
@@ -325,6 +324,7 @@ export class HomeComponent implements OnInit {
     setTimeout(() => {
       element.scrollTop = element.scrollHeight;
     }, 100);
+    
   }
 
   checkOnline(name: string): boolean {
@@ -338,6 +338,27 @@ export class HomeComponent implements OnInit {
       return 1;
     return 0;
   }
+
+
+// get friend details
+  abc(id, username){
+   
+    this.authService.frienddetails(id, username).subscribe(
+      data => {
+       
+    //    console.log(id);
+        
+       this.router.navigate(["/sugestedprofile"]);
+      },
+      error => console.log(error)
+    );
+  }
+
+
+
+
+
+
 
 }
 

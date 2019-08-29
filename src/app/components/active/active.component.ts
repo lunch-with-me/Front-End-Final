@@ -22,7 +22,7 @@ export class ActiveComponent implements OnInit {
   .subscribe(
     data => {
   console.log(data);
-     // localStorage.setItem('token', data.toString());
+     localStorage.setItem('email', data.toString());
       //this._router.navigate(['/dash']);
     },
     error => this.successMessage = 'Email and Password does not match'
