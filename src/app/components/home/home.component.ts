@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Message } from "../../models/message.model";
 import { ChatService } from "../../services/chat.service";
@@ -38,7 +39,8 @@ export class HomeComponent implements OnInit {
     private formBuilder: FormBuilder,
     private el: ElementRef,
     private authService: AuthService,
-    private chatService: ChatService
+    private chatService: ChatService,
+    private http: HttpClient
   ) { }
 
   new = false;
@@ -63,6 +65,12 @@ export class HomeComponent implements OnInit {
       this.new = true;
       this.router.navigateByUrl('/find');
     }
+    this.http.get('http://localhost:8080/users', { headers: new HttpHeaders({Authorization: localStorage.getItem('token')}) } ).subscribe(
+      data => {
+        this.user  = data['users'][0];
+      },
+      error => console.log(error)
+    );
 
   }
 
@@ -147,7 +155,7 @@ export class HomeComponent implements OnInit {
             console.log(users[i])
             users[i]['request'] = false;
             if (users[i].username == this.username) {
-              this.user = users[i];
+              //this.user = users[i];
               users.splice(i, 1);
               i--;
             }
