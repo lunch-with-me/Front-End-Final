@@ -5,6 +5,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Message } from "../../models/message.model";
 import { ChatService } from "../../services/chat.service";
 import { AuthService } from "../../services/auth.service";
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-users',
@@ -38,12 +39,14 @@ export class UsersComponent implements OnInit {
     private formBuilder: FormBuilder,
     private el: ElementRef,
     private authService: AuthService,
-    private chatService: ChatService
+    private chatService: ChatService,
+    private http: HttpClient
   ) { }
 
   ngOnInit() {
     let userData = this.authService.getUserData();
     this.username = userData.user.username;
+    console.log(this.username);
 
     this.route.params.subscribe((params: Params) => {
       this.chatWith = params.chatWith;
@@ -56,6 +59,13 @@ export class UsersComponent implements OnInit {
     this.getMessages(this.chatWith);
 
     this.connectToChat();
+
+    this.http.get('http://localhost:8080/users', { headers: new HttpHeaders({Authorization: localStorage.getItem('token')}) } ).subscribe(
+      data => {
+        this.user  = data['users'][0];
+      },
+      error => console.log(error)
+    );
 
   }
 
@@ -133,14 +143,15 @@ export class UsersComponent implements OnInit {
     console.log('b');
     this.chatService.getAllUserList()
       .subscribe(data => {
-        console.log('c');
+        console.log(data);
         if (data.success == true) {
           let users = data.users;
           for (let i = 0; i < users.length; i++) {
             console.log(users[i])
             users[i]['request'] = false;
             if (users[i].username == this.username) {
-              this.user = users[i];
+              //this.user = users[i];
+              console.log(this.user);
               users.splice(i, 1);
               i--;
             }
