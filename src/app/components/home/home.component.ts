@@ -1,11 +1,11 @@
 import { Component, OnInit, OnDestroy, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Message } from "../../models/message.model";
 import { ChatService } from "../../services/chat.service";
 import { AuthService } from "../../services/auth.service";
-import { ApiService } from "../../services/api.service";
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -20,10 +20,7 @@ export class HomeComponent implements OnInit {
   showActive: boolean;
   sendForm: FormGroup;
   username: string;
-  id:string;
-  message:String;
   chatWith: string;
-  gender: String;
   currentOnline: boolean;
   receiveMessageObs: any;
   receiveActiveObs: any;
@@ -42,10 +39,12 @@ export class HomeComponent implements OnInit {
     private formBuilder: FormBuilder,
     private el: ElementRef,
     private authService: AuthService,
-    private apiService: ApiService,
-    private chatService: ChatService
+    private chatService: ChatService,
+    private http: HttpClient
   ) { }
-new = false;
+
+  new = false;
+
   ngOnInit() {
     let userData = this.authService.getUserData();
     this.username = userData.user.username;
@@ -61,6 +60,17 @@ new = false;
     this.getMessages(this.chatWith);
 
     this.connectToChat();
+
+    if(!localStorage.getItem('timeF')){
+      this.new = true;
+      this.router.navigateByUrl('/find');
+    }
+    this.http.get('http://localhost:8080/users', { headers: new HttpHeaders({Authorization: localStorage.getItem('token')}) } ).subscribe(
+      data => {
+        this.user  = data['users'][0];
+      },
+      error => console.log(error)
+    );
 
   }
 
@@ -82,8 +92,7 @@ new = false;
       error => console.log(error)
     );
   }
-  
-//accept request
+
   acceptRequest(id, username){
     console.log(username);
     this.chatService.acceptRequest(id, username).subscribe(
@@ -146,7 +155,7 @@ new = false;
             console.log(users[i])
             users[i]['request'] = false;
             if (users[i].username == this.username) {
-              this.user = users[i];
+              //this.user = users[i];
               users.splice(i, 1);
               i--;
             }
@@ -324,7 +333,6 @@ new = false;
     setTimeout(() => {
       element.scrollTop = element.scrollHeight;
     }, 100);
-    
   }
 
   checkOnline(name: string): boolean {
@@ -338,27 +346,6 @@ new = false;
       return 1;
     return 0;
   }
-
-
-// get friend details
-  abc(id, username){
-   
-    this.authService.frienddetails(id, username).subscribe(
-      data => {
-       
-    //    console.log(id);
-        
-       this.router.navigate(["/sugestedprofile"]);
-      },
-      error => console.log(error)
-    );
-  }
-
-
-
-
-
-
 
 }
 
