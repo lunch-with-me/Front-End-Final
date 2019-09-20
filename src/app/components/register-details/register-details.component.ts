@@ -83,9 +83,9 @@ export class RegisterDetailsComponent implements OnInit {
   }
 
   checkLoggedIn(): void {
-    if (!this.authService.loggedIn()) {
-      this.router.navigate(["/register"]);
-    }
+    // if (!this.authService.loggedIn()) {
+    //   this.router.navigate(["/register"]);
+    // }
   }
 
   onRegisterSubmit(): void {

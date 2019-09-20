@@ -17,14 +17,7 @@ export class ApiService {
     });
   }
 
-
-
-  active()
-  {
-    return this._http.put(this.host + 'users/active',{});
-  }
-
-  
+  //"/userdetails/:id/:username";
 
   resetpassword(body:any){
   

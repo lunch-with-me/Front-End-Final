@@ -44,20 +44,22 @@ export class RegisterComponent implements OnInit {
   onRegisterSubmit(): void {
     this.authService.registerUser(this.registerForm.value)
       .subscribe(data => {
-        if (data.success == true) {
-          //this.flashMessagesService.show(data.msg, {cssClass: "alert-success", timeout: 3000});
-          this.authService.authenticateUser(this.registerForm.value)
-          .subscribe(data => {
-            if (data.success == true) {
-              this.authService.storeUserData(data.token, data.user, data.email);
-              localStorage.setItem("email", this.registerForm.value['email']);
-              this.flashMessagesService.show(data.msg, {cssClass: "alert-success", timeout: 999999});
+          if (data.success == true) {
+               // this.authService.storeUserData(data.token, data.user, data.email);
+                localStorage.setItem("email", this.registerForm.value['email']);
+                this.flashMessagesService.show(data.msg, {cssClass: "alert-success", timeout: 999999});
+          // this.authService.authenticateUser(this.registerForm.value)
+          // .subscribe(data => {
+          //   if (data.success == true) {
+          //     this.authService.storeUserData(data.token, data.user, data.email);
+          //     localStorage.setItem("email", this.registerForm.value['email']);
+          //     this.flashMessagesService.show(data.msg, {cssClass: "alert-success", timeout: 999999});
           
-             /// this.router.navigate(["/registerdetails"]);
-            } else {
-              this.flashMessagesService.show(data.msg, {cssClass: "alert-danger", timeout: 3000});
-            }
-          });
+          //    /// this.router.navigate(["/registerdetails"]);
+          //   } else {
+          //     this.flashMessagesService.show(data.msg, {cssClass: "alert-danger", timeout: 3000});
+          //   }
+          // });
           //this.router.navigate(["/registerdetails"]);
         } else {
           this.flashMessagesService.show(data.msg, {cssClass: "alert-danger", timeout: 3000});

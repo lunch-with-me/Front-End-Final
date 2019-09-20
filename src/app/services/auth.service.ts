@@ -45,7 +45,7 @@ export class AuthService {
 
     return observableReq;
   }
-
+// get logged in person details
   getProfile(): any {
     let url: string = this.apiUrl + "/profile";
     this.loadCredentials();
@@ -141,5 +141,24 @@ export class AuthService {
   }
 
   
-  
+// active account
+  active(){
+    let email = localStorage.getItem("email");
+     console.log(email)
+    let url: string = this.apiUrl + '/active/' + email
+    let headers = new Headers({
+      "Content-Type": "application/json",
+    });
+    let options = new RequestOptions({ headers: headers });
+    let observableReq = this.http.get(url, options).map((respon , index )=>{
+      console.log(respon)
+      var datata = this.extractData(respon)
+    })
+  // console.log("get email")
+  // console.log(this.extractData)
+  return observableReq;
+
+
+  }
+
 }
