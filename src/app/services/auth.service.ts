@@ -66,12 +66,21 @@ export class AuthService {
 
 
 
-  storeUserData(token, user, email): void {
+  storeUserData(token, users, email): void {
     localStorage.setItem("token", token);
-    localStorage.setItem("user", JSON.stringify(user));
+    localStorage.setItem("user", JSON.stringify(users));
     localStorage.setItem("email", email);
     this.authToken = token;
-    this.user = user;
+    this.user = users;
+    let user = JSON.parse(localStorage.getItem('user'));
+    if(user.timeF)
+      localStorage.setItem('timeF', user.timeF)
+    if(user.timeT)
+      localStorage.setItem('timeT', user.timeT)
+    if(user.pickupLng)
+      localStorage.setItem('pickupLng', user.pickupLng)
+    if(user.pickupLat)
+      localStorage.setItem('pickupLat', user.pickupLat)
   }
 
   getUserData(): any {

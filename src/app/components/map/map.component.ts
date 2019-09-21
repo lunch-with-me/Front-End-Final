@@ -38,6 +38,7 @@ import { ClassField } from '@angular/compiler/src/output/output_ast';
     ) { }
   
     ngOnInit() {
+      
       navigator.geolocation.getCurrentPosition( pos => {
           this.location.lng = +pos.coords.longitude;
           this.location.lat = +pos.coords.latitude;

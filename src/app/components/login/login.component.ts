@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
 
   constructor(
+    private _router: Router,
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private router: Router,
@@ -46,7 +47,10 @@ export class LoginComponent implements OnInit {
           //console.log(data.email);
           this.authService.storeUserData(data.token, data.user, data.email);
           this.chatService.connect(data.user.username);
-          this.router.navigate(["/map"]);
+          if(Object.keys(JSON.parse(localStorage.getItem('user'))).length==6)
+            this._router.navigate(['/home']);
+          else
+            this.router.navigate(["/map"]);
         } else {
           this.flashMessagesService.show(data.msg, {cssClass: "alert-danger", timeout: 3000});
         }
