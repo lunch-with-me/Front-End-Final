@@ -28,6 +28,7 @@ import { ActiveComponent } from './components/active/active.component';
 import { RegisterDetailsComponent } from './components/register-details/register-details.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { FindComponent } from './components/find/find.component';
+import { SugestedProfileComponent } from './components/sugested-profile/sugested-profile.component';
 
 // import { NgbDate, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -46,6 +47,7 @@ const appRoutes: Routes = [
   { path: 'registerdetails', component: RegisterDetailsComponent },
   { path: 'forgotpassword', component: ForgotPasswordComponent },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+  { path: 'sugestedprofile', component: SugestedProfileComponent },
   { path: 'chat', canActivate: [AuthGuard], children: [
     { path: ':chatWith', component: ChatRoomComponent },
     { path: '**', redirectTo: '/chat/chat-room', pathMatch: 'full' }
@@ -70,7 +72,8 @@ const appRoutes: Routes = [
     ActiveComponent,
     RegisterDetailsComponent,
     ForgotPasswordComponent,
-    FindComponent
+    FindComponent,
+    SugestedProfileComponent
   ],
   imports: [
     BrowserModule,

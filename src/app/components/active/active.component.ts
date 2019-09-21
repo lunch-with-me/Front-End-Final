@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { Router } from '@angular/router';
+import { AuthService } from 'app/services/auth.service';
+import { identifierName } from '@angular/compiler';
 import { ApiService } from 'app/services/api.service';
 @Component({
   selector: 'app-active',
@@ -10,32 +12,25 @@ import { ApiService } from 'app/services/api.service';
 })
 export class ActiveComponent implements OnInit {
   successMessage: String = '';
-
+  username: string;
+  id:String;
   constructor(   private formBuilder: FormBuilder,
     private flashMessagesService: FlashMessagesService,
-    private api: ApiService,
+    private authService: AuthService,
+    private api:ApiService,
     private router: Router) {
-
-   
-  this.api.active()
-  
-  .subscribe(
-    data => {
-  console.log(data);
-     // localStorage.setItem('token', data.toString());
-      //this._router.navigate(['/dash']);
-    },
-    error => this.successMessage = 'Email and Password does not match'
-  );
-
-
   }
 
   ngOnInit() {
-  }
-
+    //  let email = localStorage.getItem("email");
+    // console.log(email)
+ 
+    this.authService.active()
+  
+    }
 
   next(){
-    this.router.navigate(['/registerdetails']);
+  
+          this.router.navigate(["/registerdetails"]);
   }
 }

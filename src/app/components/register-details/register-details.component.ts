@@ -43,32 +43,34 @@ export class RegisterDetailsComponent implements OnInit {
 
   ngOnInit() {
     let val = {};
-    this.checkLoggedIn();
-    this.http.get('http://localhost:8080/users', { headers: new HttpHeaders({Authorization: localStorage.getItem('token')}) } ).subscribe(
-      data => {
-        if(data['success']){
-          val = data['users'][0];
-          //console.log(val['date_of_birth']);
-          this.registerForm = this.formBuilder.group({
-            fullname: new FormControl(val['fullname'], Validators.required),
-         gender: new FormControl(val['gender']),
-          dob:new FormControl(val['date_of_birth'].substring(0, 10), Validators.required),
-         self_description:new FormControl(val['message'], Validators.required),
-         
-         telephone: [val['telephone'], [ Validators.required, Validators.minLength(10), Validators.maxLength(15) ]],
-        //interest:new FormControl(null, Validators.required),
-        //image:new FormControl(null),
-          });
-          this.myProf = val['myProf'];
-          this.intProf = val['intProf'];
-          for(var i of val['interest']){
-            this.Interest[i] = true;
+    console.log(this.checkLoggedIn())
+    if(this.checkLoggedIn()){
+      this.http.get('http://localhost:8080/users', { headers: new HttpHeaders({Authorization: localStorage.getItem('token')}) } ).subscribe(
+        data => {
+          if(data['success']){
+            val = data['users'][0];
+            //console.log(val['date_of_birth']);
+            this.registerForm = this.formBuilder.group({
+              fullname: new FormControl(val['fullname'], Validators.required),
+          gender: new FormControl(val['gender']),
+            dob:new FormControl(val['date_of_birth'].substring(0, 10), Validators.required),
+          self_description:new FormControl(val['message'], Validators.required),
+          
+          telephone: [val['telephone'], [ Validators.required, Validators.minLength(9), Validators.maxLength(15) ]],
+          //interest:new FormControl(null, Validators.required),
+          //image:new FormControl(null),
+            });
+            this.myProf = val['myProf'];
+            this.intProf = val['intProf'];
+            for(var i of val['interest']){
+              this.Interest[i] = true;
+            }
+            this.b64 = val['image'];
           }
-          this.b64 = val['image'];
-        }
-      },
-      error => console.log(error)
-    );
+        },
+        error => console.log(error)
+      );
+    }
 
     this.registerForm = this.formBuilder.group({
       fullname: new FormControl(null, Validators.required),
@@ -76,16 +78,17 @@ export class RegisterDetailsComponent implements OnInit {
     dob:new FormControl(null, Validators.required),
    self_description:new FormControl(null, Validators.required),
    
-   telephone: ['', [ Validators.required, Validators.minLength(10), Validators.maxLength(15) ]],
+   telephone: ['', [ Validators.required, Validators.minLength(9), Validators.maxLength(15) ]],
   //interest:new FormControl(null, Validators.required),
   //image:new FormControl(null),
     });
   }
 
-  checkLoggedIn(): void {
-    if (!this.authService.loggedIn()) {
-      this.router.navigate(["/register"]);
+  checkLoggedIn(): Boolean {
+    if (!localStorage.getItem("token")) {
+      return false;
     }
+    return true;
   }
 
   onRegisterSubmit(): void {
@@ -117,7 +120,7 @@ export class RegisterDetailsComponent implements OnInit {
 
 
   register() {
-    console.log(this.Interest);
+    //console.log(this.Interest);
 
     if (!this.registerForm.valid) {
     //  this._myservice.submitRegi(this.myForm.value)

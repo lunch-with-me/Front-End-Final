@@ -24,6 +24,7 @@
       placeholder="Enter your Email"
       formControlName="email"
       >
+      <span *ngIf="isValid('email')">Entered email is invalid</span>
   </div>
 
   <div class="form-group">

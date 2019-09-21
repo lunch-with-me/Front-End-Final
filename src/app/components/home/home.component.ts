@@ -63,6 +63,7 @@ export class HomeComponent implements OnInit {
 
     if(!localStorage.getItem('timeF')){
       this.new = true;
+      
       this.router.navigateByUrl('/find');
     }
     this.http.get('http://localhost:8080/users', { headers: new HttpHeaders({Authorization: localStorage.getItem('token')}) } ).subscribe(
@@ -347,5 +348,7 @@ export class HomeComponent implements OnInit {
     return 0;
   }
 
+
+  
 }
 
