@@ -26,6 +26,8 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
   conversationId: string;
   notify: boolean;
   notification: any = {timeout:null};
+  chatAccess = false;
+  isFriend = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -37,12 +39,31 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    let userData = this.authService.getUserData();
-    this.username = userData.user.username;
-
     this.route.params.subscribe((params: Params) => {
       this.chatWith = params.chatWith;
     });
+
+    let username = JSON.parse(localStorage.getItem("user"))['username']
+    this.authService.getProfile(username)
+      .subscribe(data => {
+        let friends = data['users'][0]['friends'];
+        for(let i=0; i<friends.length; i++){
+          console.log(friends[i].username, this.chatWith)
+          if(friends[i].username == this.chatWith){
+            this.chatAccess = true;
+            this.isFriend = true;
+          }
+        }
+      },
+      err => {
+        console.log(err);
+      });
+
+      
+      
+    let userData = this.authService.getUserData();
+    this.username = userData.user.username;
+
 
     this.sendForm = this.formBuilder.group({
       message: ['', Validators.required ]
@@ -83,6 +104,21 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
             this.noMsg = false;
             this.messageList = messages;
             this.scrollToBottom();
+            
+            let msgCount = 0;
+            for(let i=0; i<this.messageList.length; i++){
+              if(this.messageList[i]['from'] == this.username){
+                let date = new Date(this.messageList[i]['created']).toJSON().slice(0,10).replace(/-/g,'-')
+                let today = new Date().toJSON().slice(0,10).replace(/-/g,'-');
+                if(date == today){
+                  msgCount++;
+                }
+              }
+            }
+            console.log(msgCount);
+            if(msgCount<1){
+              this.chatAccess = true;
+            }
           } else {
             this.noMsg = true;
             this.messageList = [];
@@ -181,6 +217,9 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
   }
 
   onSendSubmit(): void {
+    if(!this.isFriend){
+      this.chatAccess = false;
+    }
     let newMessage: Message = {
       created: new Date(),
       from: this.username,

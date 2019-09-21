@@ -46,8 +46,8 @@ export class AuthService {
     return observableReq;
   }
 // get logged in person details
-  getProfile(): any {
-    let url: string = this.apiUrl + "/profile";
+  getProfile(username): any {
+    let url: string = this.apiUrl + "/users/" + username;
     this.loadCredentials();
 
     // prepare the request

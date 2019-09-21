@@ -20,7 +20,7 @@
           <img src="{{u.image}}" class="img-circle" width="60px" *ngIf="u.image">
         </div>
         <div class="col-sm-7" style="padding-left: 30px;">
-          <h4><a href="javascript:void(0)" style="color: black;">{{u.username}}</a></h4>
+          <h4><a style="color: black;" href="/profile?username={{u.username}}">{{u.username}}</a></h4>
         </div>
         <div class="col-sm-2">  
           <a ref="javascript:void(0)" style="color: black;" routerLink="/chat/{{u.username}}">Chat</a>
@@ -52,14 +52,14 @@
                   <img src="{{u.image}}" class="img-circle" width="80px" height="80px" *ngIf="u.image">
               </div>
               <div class="col-sm-8">
-                <h4><a href="javascript:void(0)" style="color: black;"(click)="abc(u._id, u.username)"><a>{{u.username}}</a> <br></a></h4>
+                <h4><a style="color: black;" href="/profile?username={{u.username}}"><a>{{u.username}}</a> <br></a></h4>
                 <h4><a href="javascript:void(0)" style="color: black;">{{u.message}}</a></h4>
                 <h4><a href="javascript:void(0)" style="color: black;">{{u._id}}</a></h4>
               </div>
               <div class="col-sm-2">          
                 <a ref="javascript:void(0)" (click)="sendRequest(u._id, u.username)" *ngIf="!u.request" style="color: black;"><button type="button" class="btn btn-info">Like</button></a>
                 <a ref="javascript:void(0)" style="color: black;" *ngIf="u.request"><button type="" class="btn btn-info">Request sent</button></a>
-                <a ref="javascript:void(0)" (click)="sendRequest(u._id, u.username)" *ngIf="!u.request" style="color: black;"><button type="button" class="btn btn-info">Super Like</button></a>
+                <a ref="javascript:void(0)" href="/chat/{{u.username}}" *ngIf="!u.request" style="color: black;"><button type="button" class="btn btn-info">Super Like</button></a>
                 <a ref="javascript:void(0)" style="color: black;" *ngIf="u.request">Request Sent</a>
               </div>
             </div>

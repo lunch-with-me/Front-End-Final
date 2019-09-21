@@ -13,7 +13,7 @@
               <img src="{{u.image}}" class="img-circle" width="60px" *ngIf="u.image">
           </div>
           <div class="col-sm-8">
-            <h4><a href="javascript:void(0)" style="color: black;">{{u.username}}</a></h4>
+            <h4><a href="/profile?username={{u.username}}" style="color: black;">{{u.username}}</a></h4>
           </div>
           <div class="col-sm-2">          
             <a ref="javascript:void(0)" (click)="acceptRequest(u._id, u.username)" style="color: black;">Accept</a>
@@ -40,7 +40,7 @@
               <img src="{{u.image}}" class="img-circle" width="60px" *ngIf="u.image">>
             </div>
             <div class="col-sm-8">
-              <h4><a href="javascript:void(0)" style="color: black;">{{u.username}}</a></h4>
+              <h4><a href="/profile?username={{u.username}}" style="color: black;">{{u.username}}</a></h4>
             </div>
             <div class="col-sm-2">  
               <a ref="javascript:void(0)" style="color: black;" routerLink="/chat/{{u.username}}">Chat</a>
@@ -67,7 +67,7 @@
           <img src="{{u.image}}" class="img-circle" width="60px" *ngIf="u.image">
         </div>
         <div class="col-sm-8">
-          <h4><a href="javascript:void(0)" style="color: black;">{{u.username}}</a></h4>
+          <h4><a href="/profile?username={{u.username}}" style="color: black;">{{u.username}}</a></h4>
         </div>
         <div class="col-sm-2">          
           <a ref="javascript:void(0)" (click)="sendRequest(u._id, u.username)" *ngIf="!u.request" style="color: black;">Send Request</a>

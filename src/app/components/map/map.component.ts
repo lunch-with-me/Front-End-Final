@@ -29,6 +29,8 @@ import { ClassField } from '@angular/compiler/src/output/output_ast';
     timeT = localStorage.getItem('timeT');
     now = false;
     time = null;
+    timeFA = null;
+    timeTA = null;
   
     constructor(
       private _router: Router,
@@ -126,14 +128,18 @@ import { ClassField } from '@angular/compiler/src/output/output_ast';
 
     saveN(){
       var d = new Date();
-      d.setHours(this.time.substring(0,2), this.time.substring(3,5), 0);
-      //console.log(d);
-      this.http.post('http://localhost:8080/users/meet', {'timeF': d.toISOString(), 'timeT': d.toISOString(), 'pickupLng': this.location.lng.toString(), 'pickupLat': this.location.lat.toString(), 'email': localStorage.getItem('email')},{ headers: new HttpHeaders({Authorization: localStorage.getItem('token')}) } ).subscribe(
+      d.setHours(this.timeFA.substring(0,2), this.timeFA.substring(3,5), 0);
+      var e = new Date();
+      e.setHours(this.timeTA.substring(0,2), this.timeTA.substring(3,5), 0);
+      this.timeF = d.toISOString();
+      this.timeT = e.toISOString();
+      console.log(e);
+      this.http.post('http://localhost:8080/users/meet', {'timeF': d.toISOString(), 'timeT': e.toISOString(), 'pickupLng': this.location.lng.toString(), 'pickupLat': this.location.lat.toString(), 'email': localStorage.getItem('email')},{ headers: new HttpHeaders({Authorization: localStorage.getItem('token')}) } ).subscribe(
         data => console.log(data),
         error => console.log(error)
       );
       localStorage.setItem('timeF', d.toISOString());
-      localStorage.setItem('timeT', d.toISOString());
+      localStorage.setItem('timeT', e.toISOString());
       
     this.timeF = localStorage.getItem('timeF');
         this.timeT = localStorage.getItem('timeT');
