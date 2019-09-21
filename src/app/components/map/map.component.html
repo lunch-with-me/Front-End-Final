@@ -115,7 +115,11 @@
                           </agm-map>
                       </div>
               </div>
-              <button bg="primary" (click)="submit();" style="height: 40px; margin-top: 10px; margin-left:50%; height: 40px; font-size: 14px; background: #ff9900;">
+              <button bg="primary" (click)="submit();" style="height: 40px; margin-top: 10px; margin-left:50%; height: 40px; font-size: 14px; background: #ff9900;" *ngIf="timeF && timeT">
+                      <i class="fa fa-search"></i>
+                      <span> Submit</span>
+                    </button>
+                    <button bg="primary" style="height: 40px; margin-top: 10px; margin-left:50%; height: 40px; font-size: 14px; background: #3a2403;" *ngIf="!(timeF && timeT)" disabled>
                       <i class="fa fa-search"></i>
                       <span> Submit</span>
                     </button>
