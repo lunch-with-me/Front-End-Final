@@ -21,9 +21,18 @@ export class RegisterDetailsComponent implements OnInit {
     Food1: false,
     Food2: false,
     Food3: false,
+    Food4: false,
+    Food5: false,
+    Food6: false,
     Hobbies1: false,
     Hobbies2: false,
     Hobbies3: false,
+    Hobbies4: false,
+    Hobbies5: false,
+    Hobbies6: false,
+    Hobbies7: false,
+    Hobbies8: false,
+    Hobbies9: false,
     Drinks1: false,
     Drinks2: false,
     Drinks3: false
@@ -56,7 +65,7 @@ export class RegisterDetailsComponent implements OnInit {
             dob:new FormControl(val['date_of_birth'].substring(0, 10), Validators.required),
           self_description:new FormControl(val['message'], Validators.required),
           
-          telephone: [val['telephone'], [ Validators.required, Validators.minLength(9), Validators.maxLength(15) ]],
+      //    telephone: [val['telephone'], [ Validators.required, Validators.minLength(9), Validators.maxLength(15) ]],
           //interest:new FormControl(null, Validators.required),
           //image:new FormControl(null),
             });
@@ -78,7 +87,7 @@ export class RegisterDetailsComponent implements OnInit {
     dob:new FormControl(null, Validators.required),
    self_description:new FormControl(null, Validators.required),
    
-   telephone: ['', [ Validators.required, Validators.minLength(9), Validators.maxLength(15) ]],
+  // telephone: ['', [ Validators.required, Validators.minLength(9), Validators.maxLength(15) ]],
   //interest:new FormControl(null, Validators.required),
   //image:new FormControl(null),
     });
