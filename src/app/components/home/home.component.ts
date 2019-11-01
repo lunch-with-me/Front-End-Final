@@ -5,7 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Message } from "../../models/message.model";
 import { ChatService } from "../../services/chat.service";
-import { AuthService } from "../../services/auth.service";
+import { authService } from "../../services/auth.service";
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -38,7 +38,7 @@ export class HomeComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private el: ElementRef,
-    private authService: AuthService,
+    private authService: authService,
     private chatService: ChatService,
     private http: HttpClient
   ) { }

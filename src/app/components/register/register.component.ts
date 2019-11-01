@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { Router } from '@angular/router';
 
-import { AuthService } from "../../services/auth.service";
+import { authService } from "../../services/auth.service";
 
 @Component({
   selector: 'app-register',
@@ -17,7 +17,7 @@ export class RegisterComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private flashMessagesService: FlashMessagesService,
-    private authService: AuthService,
+    private authService: authService,
     private router: Router
   ) { }
 
@@ -42,6 +42,7 @@ export class RegisterComponent implements OnInit {
     return this.registerForm.get(controlName).invalid && this.registerForm.get(controlName).touched;
   }
   onRegisterSubmit(): void {
+    
     this.authService.registerUser(this.registerForm.value)
       .subscribe(data => {
           if (data.success == true) {

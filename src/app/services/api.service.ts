@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
-import { AuthService } from './auth.service';
+import { authService } from './auth.service';
 
 @Injectable()
 export class ApiService {
 
-  constructor(private _http: HttpClient, private auth:AuthService) { }
+  constructor(private _http: HttpClient, private auth:authService) { }
 
   host = 'http://localhost:8080/';
 
@@ -17,14 +17,13 @@ export class ApiService {
     });
   }
 
-  //"/userdetails/:id/:username";
-
-  resetpassword(body:any){
+// Sent an forgot password email 
+forgotpasswordSentanEmail(body:any){
   
-    return this._http.post(this.host+ 'users/resetpassword', body,{});
-  
+  return this._http.post(this.host+ 'users/forgotpasswordEmailVerification', body,{});
 }
- 
+
+
 submitRegi(body:any){
   return this._http.post(this.host + 'users/registerdetails', body,{
     observe:'body',
@@ -38,4 +37,27 @@ getfrienddetails(){
     headers:new HttpHeaders().append('Content-Type','application/json')
   });
 }
+
+
+// SocialLogin(body:any){
+//   console.log(body.email);
+//   return this._http.post(this.host + 'users/Socialregister', body,{
+//     observe:'body',
+    
+//     headers:new HttpHeaders().append('Content-Type','application/json')
+//   });
+ 
+// }
+
+//sendToRestApiMethod(email: string,username: string){
+
+  googleLogin(body:any){
+    console.log(body)
+    return this._http.post(this.host + 'users/google', body,{
+      observe:'body',
+      headers:new HttpHeaders().append('Content-Type','application/json')
+    });
+
+}
+
 }

@@ -7,7 +7,7 @@ import {environment} from '../../environments/environment';
 const BASE_URL = environment.backendUrl;
 
 @Injectable()
-export class AuthService {
+export class authService {
   private authToken: string;
   private user: string;
 
@@ -16,6 +16,7 @@ export class AuthService {
   constructor(private http: Http) { }
 
   registerUser(user): any {
+    console.log(user)
     let url: string = this.apiUrl + "/register";
 
     // prepare the request
@@ -45,6 +46,7 @@ export class AuthService {
 
     return observableReq;
   }
+
 // get logged in person details
   getProfile(username): any {
     let url: string = this.apiUrl + "/users/" + username;
@@ -150,7 +152,7 @@ export class AuthService {
   }
 
   
-// active account
+//******************account activation*******
   active(){
     let email = localStorage.getItem("email");
      console.log(email)
@@ -161,11 +163,41 @@ export class AuthService {
         },
         error => console.log(error)
       );
-    
-  // console.log("get email")
-  // console.log(this.extractData)
-
-
   }
 
+ //***************Social media through login***************/
+  googleLogin(user):any{
+    let url: string = this.apiUrl + "/google";
+    console.log("lklfnjebhjrfv")
+    // prepare the request
+    let headers = new Headers({ "Content-Type": "application/json" });
+    let options = new RequestOptions({ headers: headers });
+    let reqBody = user;
+
+    // POST
+    let observableReq = this.http.post(url, reqBody, options)
+                                 .map(this.extractData);
+      return observableReq;
+
+}
+
+
+  
+//*************forgot password*****************
+resetpassword(user): any {
+  console.log(user)
+  let url: string = this.apiUrl + "/forgotPassword";
+
+  // prepare the request
+  let headers = new Headers({ "Content-Type": "application/json" });
+  let options = new RequestOptions({ headers: headers });
+  let reqBody = user;
+
+  // POST
+  let observableReq = this.http.post(url, reqBody, options)
+                               .map(this.extractData);
+
+  return observableReq;
+}
+  
 }

@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { Router } from '@angular/router';
 
-import { AuthService } from "../../services/auth.service";
+import { authService } from "../../services/auth.service";
 import { ApiService } from 'app/services/api.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
@@ -44,7 +44,7 @@ export class RegisterDetailsComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private flashMessagesService: FlashMessagesService,
-    private authService: AuthService,
+    private authService: authService,
     private apiService:ApiService,
     private router: Router,
     private http: HttpClient

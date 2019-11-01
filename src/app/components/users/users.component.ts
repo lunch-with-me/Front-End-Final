@@ -4,7 +4,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { Message } from "../../models/message.model";
 import { ChatService } from "../../services/chat.service";
-import { AuthService } from "../../services/auth.service";
+import { authService } from "../../services/auth.service";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
@@ -38,7 +38,7 @@ export class UsersComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private el: ElementRef,
-    private authService: AuthService,
+    private authService: authService,
     private chatService: ChatService,
     private http: HttpClient
   ) { }

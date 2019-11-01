@@ -1,3 +1,5 @@
+<head><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
 <div class="container">
     <h2 class="page-header text-center">Login</h2>
   
@@ -34,14 +36,27 @@
           >Login
         </button>
       </div>
-  
+    
       <div class="text-center">
       
-        <a [routerLink]="['/forgotpassword']">forgot password?</a> <br>
+        <a [routerLink]="['/forgotpass']">forgot password?</a> <br>
         <a [routerLink]="['/register']">Don't have an account?</a>
       </div>
   
+     
     </form>
-  
+    <form>
+    <div class="panel-body">
+      <div class="form-group text-center">
+        <button class="fa fa-facebook" (click)="signIn('facebook')" >  facebook</button>
+    
+      </div>
+      <div class="form-group text-center">
+        <button class="fa fa-google" (click)="signIn('google')">  google</button>
+      </div>
+  </div>
+
+ 
+  </form>
   </div>
   

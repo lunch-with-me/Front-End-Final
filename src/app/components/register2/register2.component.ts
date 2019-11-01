@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { Router } from '@angular/router';
 
-import { AuthService } from "../../services/auth.service";
+import { authService } from "../../services/auth.service";
 
 @Component({
   selector: 'app-register2',
@@ -17,7 +17,7 @@ export class Register2Component implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private flashMessagesService: FlashMessagesService,
-    private authService: AuthService,
+    private authService: authService,
     private router: Router
   ) { }
 

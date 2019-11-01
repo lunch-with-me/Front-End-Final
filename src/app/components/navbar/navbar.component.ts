@@ -1,7 +1,7 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AuthService } from "../../services/auth.service";
+import { authService } from "../../services/auth.service";
 import { ChatService } from "../../services/chat.service";
 
 @Component({
@@ -13,7 +13,7 @@ import { ChatService } from "../../services/chat.service";
 export class NavbarComponent implements OnInit {
   username: string;
   constructor(
-    private authService: AuthService,
+    private authService: authService,
     private router: Router,
     private chatService: ChatService,
     private el: ElementRef

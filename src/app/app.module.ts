@@ -15,7 +15,7 @@ import { ChatRoomComponent } from './components/chat-room/chat-room.component';
 import { MessageComponent } from './components/message/message.component';
 
 import { FlashMessagesModule } from 'angular2-flash-messages';
-import { AuthService } from "./services/auth.service";
+import { authService } from "./services/auth.service";
 import { AuthGuard } from "./guards/auth.guard";
 import { ChatService } from "./services/chat.service";
 import { ActiveListComponent } from './components/active-list/active-list.component';
@@ -30,7 +30,8 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
 import { FindComponent } from './components/find/find.component';
 import { SugestedProfileComponent } from './components/sugested-profile/sugested-profile.component';
 import { OffersComponent } from './offers/offers.component';
-
+import { Angular2SocialLoginModule } from "angular2-social-login";
+import { ForgotpassComponent } from './components/forgotpass/forgotpass.component';
 // import { NgbDate, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 //import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
@@ -47,6 +48,7 @@ const appRoutes: Routes = [
   { path: 'active', component: ActiveComponent },
   { path: 'registerdetails', component: RegisterDetailsComponent },
   { path: 'forgotpassword', component: ForgotPasswordComponent },
+  { path: 'forgotpass', component: ForgotpassComponent },//get email address
   { path: 'profile', component: ProfileComponent },
   { path: 'sugestedprofile', component: SugestedProfileComponent },
   { path: 'offers', component: OffersComponent },
@@ -56,6 +58,20 @@ const appRoutes: Routes = [
   ] },
   { path: '**', redirectTo: '/', pathMatch: 'full' },
 ];
+
+let providers = {
+  "google": {
+    "clientId": "937793286271-pn0abpje4rqkoj72hm1mrihrbo2je7lr.apps.googleusercontent.com"
+  },
+  "linkedin": {
+    "clientId": "LINKEDIN_CLIENT_ID"
+  },
+  "facebook": {
+    "clientId": "867674753633266",
+    "apiVersion": "v2.8" //like v2.4
+  }
+};
+
 
 @NgModule({
   declarations: [
@@ -71,17 +87,19 @@ const appRoutes: Routes = [
     MapComponent,
     UsersComponent,
     Register2Component,
+  
     ActiveComponent,
     RegisterDetailsComponent,
     ForgotPasswordComponent,
     FindComponent,
     SugestedProfileComponent,
-    OffersComponent
+    OffersComponent,
+    ForgotpassComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    
+    Angular2SocialLoginModule,
     ReactiveFormsModule,
   // NgbModule,
     //NgbDate,
@@ -96,7 +114,7 @@ const appRoutes: Routes = [
   ],
   providers: [
     AuthGuard,
-    AuthService,
+    authService,
     ChatService,
     ApiService
   ],
@@ -104,3 +122,5 @@ const appRoutes: Routes = [
 })
 
 export class AppModule { }
+
+Angular2SocialLoginModule.loadProvidersScripts(providers);

@@ -4,6 +4,8 @@
       <div class="panel-heading text-center clearfix">
         <h2>Friends</h2>
       </div>
+      
+      <div class="panel panel-primary chat-container1">
       <div *ngFor="let u of user.friends">
         <div class="col-sm-12" >
           <div class="col-sm-2">
@@ -20,23 +22,27 @@
         <div class="clearfix"></div>
         <hr />
       </div>
+      </div>
     </div>
 
     <div class="col-sm-8 col-lg-9 column">
-      <div class="panel panel-primary chat-container">
+      
         <div class="panel-heading text-center clearfix">
           <h2>Matches</h2>
         </div>
-    
+        <div class="panel panel-primary chat-container">
         <div *ngFor="let u of userList">
           <div class="col-sm-12" >
             <div class="col-sm-3">
                 <img src="https://www.infrascan.net/demo/assets/img/avatar5.png" class="img-circle" width="60px" *ngIf="!u.image">
-                <img src="{{u.image}}" class="img-circle" width="80px" height="80px" *ngIf="u.image">
+                <img src="{{u.image}}" class="img-circle" width="80px" height="80px"  *ngIf="u.image">
             </div>
             <div class="col-sm-7">
-              <h4><a style="color: black;" href="/profile?username={{u.username}}"><a>{{u.username}}</a> <br></a></h4>
+              <h4><a style="color: black;" href="/profile?username={{u.username}}"><a>{{u.username}}</a></a></h4>
+              <p style="color: black;"> <b>Available from :</b>{{u.timeF |date:'MMM d, y, h:mm:ss a' }} <b> To:</b>{{u.timeT |date:'MMM d, y, h:mm:ss a' }}</p>
+              <br>
               <h4><p style="color: black;">{{u.message}}</p></h4>
+              <!-- {{user.date_of_birth |  date:'yyyy-MM-dd' }} -->
             
             </div>
             <div class="col-sm-2">          
@@ -46,7 +52,7 @@
               <!-- <a ref="javascript:void(0)" style="color: black;" *ngIf="u.request">Request Sent</a> -->
             </div>
             <br><br>
-            <div class="col-sm-3">
+            <div class="col-sm-2"><br>
                 <a ref="javascript:void(0)" href="/chat/{{u.username}}" *ngIf="!u.superlike" style="color: black;"><button type="button" class="btn btn-info">Super Like</button></a>
             </div>
           </div>

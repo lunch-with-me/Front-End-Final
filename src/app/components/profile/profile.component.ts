@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from "../../services/auth.service";
+import { authService } from "../../services/auth.service";
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -11,7 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 export class ProfileComponent implements OnInit {
   user: Object;
 
-  constructor(private authService: AuthService, private activatedRoute: ActivatedRoute) { }
+  constructor(private authService: authService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     let username = null;

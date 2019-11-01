@@ -4,7 +4,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import {Http,Response} from '@angular/http';
 import { Message } from "../../models/message.model";
 import { ChatService } from "../../services/chat.service";
-import { AuthService } from "../../services/auth.service";
+import { authService } from "../../services/auth.service";
 import { ApiService } from "../../services/api.service";
 import { HttpParams } from '@angular/common/http';
 @Component({
@@ -22,7 +22,7 @@ id= ' ';
   gender='';
   message=''; 
   profession='';
-  constructor(private authService: AuthService,   private apiService: ApiService,private http:Http) { }
+  constructor(private authService: authService,   private apiService: ApiService,private http:Http) { }
 
 
 

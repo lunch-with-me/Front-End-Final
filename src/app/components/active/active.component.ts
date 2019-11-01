@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { Router } from '@angular/router';
-import { AuthService } from 'app/services/auth.service';
+import { authService } from 'app/services/auth.service';
 import { identifierName } from '@angular/compiler';
 import { ApiService } from 'app/services/api.service';
 @Component({
@@ -16,7 +16,7 @@ export class ActiveComponent implements OnInit {
   id:String;
   constructor(   private formBuilder: FormBuilder,
     private flashMessagesService: FlashMessagesService,
-    private authService: AuthService,
+    private authService: authService,
     private api:ApiService,
     private router: Router) {
   }

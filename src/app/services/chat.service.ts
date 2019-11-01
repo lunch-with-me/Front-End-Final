@@ -5,7 +5,7 @@ import 'rxjs/add/operator/map';
 
 import * as io from 'socket.io-client';
 import { Message } from "../models/message.model";
-import { AuthService } from "./auth.service";
+import { authService } from "./auth.service";
 import {environment} from '../../environments/environment';
 
 const BASE_URL = environment.backendUrl;
@@ -17,7 +17,7 @@ export class ChatService {
   private apiUrl: string = `${BASE_URL}/messages`;
   private usersUrl: string = `${BASE_URL}/users`;
 
-  constructor(private authService: AuthService, private http: Http) { }
+  constructor(private authService: authService, private http: Http) { }
 
   connect(username: string, callback: Function = ()=>{}): void {
     // initialize the connection
