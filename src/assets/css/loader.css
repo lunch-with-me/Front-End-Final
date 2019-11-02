@@ -58,7 +58,9 @@
     Align content
  */
 .loader-container {
-  padding-top: calc(50vh - 80px); }
+  padding-top: calc(50vh - 80px)!important;
+  padding-left: calc(50vw - 80px)!important;
+}
 
 .loader {
   position: relative;

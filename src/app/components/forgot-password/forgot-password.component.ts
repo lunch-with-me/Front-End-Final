@@ -12,6 +12,7 @@ import { authService } from "../../services/auth.service";
 })
 export class ForgotPasswordComponent implements OnInit {
   myForm: FormGroup;
+  successMessage = '';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -41,14 +42,11 @@ export class ForgotPasswordComponent implements OnInit {
             .subscribe(
               data => {
                 console.log("reset password is succeeded");
-                if (data.success == true) {
-          this. flashMessagesService.show(data.msg, { cssClass: 'alert-success' } );
-                }
-                else{
-                  this.flashMessagesService.show(data.msg, {cssClass: "alert-danger", timeout: 3000});
-                }
+                console.log(data)
+                this.successMessage = data;
               
-              }
+              },
+              error => {console.log(error)}
             )
     
     }

@@ -17,8 +17,7 @@ export class ActiveListComponent implements OnInit {
   }
 
   onUserClick(username: string): boolean {
-    console.log(this.users)
-    this.newConv.emit(username);
+    //this.newConv.emit(username);
     return false;
   }
 

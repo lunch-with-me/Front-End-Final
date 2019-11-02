@@ -167,6 +167,16 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
                 }
               }
 
+              for(let z of data['chat']){
+                let is = true;
+                for(let zz of this.userList){
+                  if(zz.username == z)
+                    is = false;
+                }
+                if(is)
+                  this.userList.push({'username': z});
+              }
+
               for (let user of this.userList) {
                 let flag = 0;
                 for (let liveUser of usersOn) {

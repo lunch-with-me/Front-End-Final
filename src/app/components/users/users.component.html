@@ -1,5 +1,8 @@
+<div class="loader-container" *ngIf="loader">
+    <div class="loader"></div>
+  </div>
 
-<div class="container">
+<div class="container" *ngIf="!loader">
     <div class="top">
       <h2 style="color: black">Request List</h2>
     </div>
@@ -26,7 +29,7 @@
     </div>
   </div>
 
-  <div class="container">
+  <div class="container" *ngIf="!loader">
       <div class="top">
         <h2 style="color: black">Friend's List</h2>
       </div>
@@ -37,7 +40,7 @@
           <div class="col-sm-12" >
             <div class="col-sm-2">
               <img src="https://www.infrascan.net/demo/assets/img/avatar5.png" class="img-circle" width="60px" *ngIf="!u.image">
-              <img src="{{u.image}}" class="img-circle" width="60px" *ngIf="u.image">>
+              <img src="{{u.image}}" class="img-circle" width="60px" *ngIf="u.image">
             </div>
             <div class="col-sm-8">
               <h4><a href="/profile?username={{u.username}}" style="color: black;">{{u.username}}</a></h4>
@@ -53,7 +56,7 @@
       </div>
     </div>
 
-<div class="container">
+<div class="container" *ngIf="!loader">
   <div class="top">
     <h2 style="color: black">Find Friends</h2>
   </div>

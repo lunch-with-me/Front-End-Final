@@ -16,6 +16,7 @@ export class ChatService {
   private chatUrl: string = environment.chatUrl;
   private apiUrl: string = `${BASE_URL}/messages`;
   private usersUrl: string = `${BASE_URL}/users`;
+  private chaListURL: string = `${BASE_URL}/users/chatlist`;
 
   constructor(private authService: authService, private http: Http) { }
 
@@ -76,7 +77,7 @@ export class ChatService {
   }
 
   getUserList(): any {
-    let url = this.usersUrl;
+    let url = this.chaListURL;
 
     let authToken = this.authService.getUserData().token;
 

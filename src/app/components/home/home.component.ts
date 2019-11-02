@@ -32,6 +32,9 @@ export class HomeComponent implements OnInit {
     requests: [],
     friends: []
   };
+  userAll = []
+  noFreinds = false;
+  noMatches = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -44,6 +47,15 @@ export class HomeComponent implements OnInit {
   ) { }
 
   new = false;
+  loader = true;
+  countL = 0;
+  loads = 2;
+  CounterL(){
+    this.countL++;
+    if(this.countL>=this.loads){
+      this.loader = false;
+    }
+  }
 
   ngOnInit() {
     let userData = this.authService.getUserData();
@@ -64,14 +76,31 @@ export class HomeComponent implements OnInit {
     if(!localStorage.getItem('timeF')){
       this.new = true;
       
-      this.router.navigateByUrl('/find');
+      this.router.navigateByUrl('/map');
     }
-    this.http.get('http://localhost:8080/users', { headers: new HttpHeaders({Authorization: localStorage.getItem('token')}) } ).subscribe(
+    this.http.get('http://localhost:8080/users/all', { headers: new HttpHeaders({Authorization: localStorage.getItem('token')}) } ).subscribe(
       data => {
-        this.user  = data['users'][0];
-      },
+        this.userAll  = data['users'];
+        this.http.get('http://localhost:8080/users', { headers: new HttpHeaders({Authorization: localStorage.getItem('token')}) } ).subscribe(
+          data => {
+            this.user  = data['users'][0];
+            if(this.user['friends'].length == 0)
+              this.noFreinds = true;
+            for(var i=0; i<this.user['friends'].length; i++){
+              for(var u of this.userAll){
+                if(u['username']==this.user['friends'][i]['username']){
+                  this.user['friends'][i]['image'] = u['image'];
+                  break;
+                }
+              }
+            }
+          },
+          error => console.log(error)
+        );
+          },
       error => console.log(error)
     );
+    
 
   }
 
@@ -119,6 +148,7 @@ export class HomeComponent implements OnInit {
   getMessages(name: string): void {
     this.chatService.getConversation(this.username, name)
       .subscribe(data => {
+        this.CounterL();
         if (data.success == true) {
           this.conversationId = data.conversation._id || data.conversation._doc._id;
           let messages = data.conversation.messages || null;
@@ -150,11 +180,16 @@ export class HomeComponent implements OnInit {
     this.chatService.getAllUserList()
       .subscribe(data => {
         console.log('c');
+        this.CounterL();
         if (data.success == true) {
           let users = data.users;
           for (let i = 0; i < users.length; i++) {
             console.log(users[i])
             users[i]['request'] = false;
+            for(var z=0; z<users[i]['requests'].length; z++){
+              if(users[i]['requests'][z].username == this.username)
+                users[i]['request'] = true;
+            }
             if (users[i].username == this.username) {
               //this.user = users[i];
               users.splice(i, 1);
@@ -183,6 +218,8 @@ export class HomeComponent implements OnInit {
         }
           console.log(users)
           this.userList = users.sort(this.compareByUsername);
+          if(this.userList.length == 0)
+            this.noMatches = true;
 
           this.receiveActiveObs = this.chatService.receiveActiveList()
             .subscribe(users => {
