@@ -104,7 +104,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
             this.noMsg = false;
             this.messageList = messages;
             this.scrollToBottom();
-            
+            //super like chat access
             let msgCount = 0;
             for(let i=0; i<this.messageList.length; i++){
               if(this.messageList[i]['from'] == this.username){

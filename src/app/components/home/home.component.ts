@@ -32,6 +32,7 @@ export class HomeComponent implements OnInit {
     requests: [],
     friends: []
   };
+  friends = [];
   userAll = []
   noFreinds = false;
   noMatches = false;
@@ -87,12 +88,19 @@ export class HomeComponent implements OnInit {
             if(this.user['friends'].length == 0)
               this.noFreinds = true;
             for(var i=0; i<this.user['friends'].length; i++){
-              for(var u of this.userAll){
-                if(u['username']==this.user['friends'][i]['username']){
-                  this.user['friends'][i]['image'] = u['image'];
-                  break;
-                }
-              }
+              //for(var u of this.userAll){
+                this.friends.push(this.user['friends'][i]['username']);
+                //if(u['username']==this.user['friends'][i]['username']){
+                  this.http.get('http://localhost:8080/users/users/' + this.user['friends'][i]['username'], { headers: new HttpHeaders({Authorization: localStorage.getItem('token')}) } ).subscribe(
+                  data => { 
+                    for(var j=0; j<this.user['friends'].length; j++){ 
+                      if(this.user['friends'][j]['username']==data['users'][0]['username'])    {    
+                        this.user['friends'][j]['image'] = data['users'][0]['image'];
+                      }
+                    }
+                }, error => {}
+                  )//}
+              //}
             }
           },
           error => console.log(error)
@@ -179,33 +187,40 @@ export class HomeComponent implements OnInit {
     console.log('b');
     this.chatService.getAllUserList()
       .subscribe(data => {
-        console.log('c');
+        //console.log('c');
+        //console.log(data);
         this.CounterL();
         if (data.success == true) {
           let users = data.users;
           for (let i = 0; i < users.length; i++) {
-            console.log(users[i])
+            //console.log(users[i])
             users[i]['request'] = false;
             for(var z=0; z<users[i]['requests'].length; z++){
               if(users[i]['requests'][z].username == this.username)
                 users[i]['request'] = true;
             }
+            for(let j=0; j<users[i]['friends'].length; j++){
+              if(users[i]['friends'][j]['username'] == this.username){
+                users[i]['friend'] = true;
+              }
+            }
+            console.log(users)
             if (users[i].username == this.username) {
               //this.user = users[i];
               users.splice(i, 1);
               i--;
             }
           }
-          for (let i = 0; i < users.length; i++) {
-              for (let j = 0; j < this.user.friends.length; j++) {
-                if (users[i].username == this.user.friends[j].username) {
-                  users.splice(i, 1);
-                  i--;
-                  break;
-                }
-              }
-            
-          }
+          // for (let i = 0; i < users.length; i++) {
+          //     for (let j = 0; j < this.user.friends.length; j++) {
+          //       if (users[i].username == this.user.friends[j].username) {
+          //         users.splice(i, 1);
+          //         i--;
+          //         break;
+          //       }
+          //     }
+          // }
+
           for (let i = 0; i < users.length; i++) {
             for (let j = 0; j < this.user.requests.length; j++) {  
               if (users[i].username == this.user.requests[j].username) {
@@ -216,6 +231,7 @@ export class HomeComponent implements OnInit {
             }
           
         }
+        console.log('users');
           console.log(users)
           this.userList = users.sort(this.compareByUsername);
           if(this.userList.length == 0)

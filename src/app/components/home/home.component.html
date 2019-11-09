@@ -1,23 +1,22 @@
-<div class="full">
 <div class="container-fluid">
   <div class="loader-container" *ngIf="loader">
     <div class="loader"></div>
   </div>
-  <div class="row" *ngIf="!loader">
+  
+    <div class="row" *ngIf="!loader">
     <div class="col-sm-4 col-lg-3 active-list-container" >
       <div class="panel-heading text-center clearfix">
         <h2>Friends</h2>
       </div>
       
 
-      <div class="panel panel-primary chat-container1"  >
-        
       <h6 *ngIf="noFreinds">No Friends Found</h6>
+      <div class="panel panel-primary chat-container1" style="background: yellowgreen">
       <div *ngFor="let u of user.friends">
         <div class="col-sm-12" >
           <div class="col-sm-2">
             <img src="https://www.infrascan.net/demo/assets/img/avatar5.png" class="img-circle" width="60px" *ngIf="!u.image">
-            <img src="{{u.image}}" class="img-circle" width="60px" *ngIf="u.image">
+            <img src="{{u.image}}" class="img-circle" width="60px" height="60px" *ngIf="u.image">
           </div>
           <div class="col-sm-7" style="padding-left: 30px;">
             <h4><a style="color: black;" href="/profile?username={{u.username}}">{{u.username}}</a></h4>
@@ -33,50 +32,54 @@
     </div>
 
     <div class="col-sm-8 col-lg-9 column">
-      
-        <div class="panel-heading text-center clearfix">
+       <div class="panel-heading text-center clearfix">
           <h2>Matches</h2>
         </div>
+
         <h6 *ngIf="noMatches">No Matches Found</h6>
-        <div class="chat-container">
+
+      <div class="panel panel-primary chat-container">
+
         <div *ngFor="let u of userList">
           <div class="col-sm-12" >
-            
             <div class="col-sm-3">
-                <img src="https://www.infrascan.net/demo/assets/img/avatar5.png"  width="60px" *ngIf="!u.image">
-                <img src="{{u.image}}"  width="200px" height="200px"  *ngIf="u.image">
+                <img src="https://www.infrascan.net/demo/assets/img/avatar5.png" class="img-circle" width="60px" *ngIf="!u.image">
+                <img src="{{u.image}}" class="img-circle" width="80px" height="80px"  *ngIf="u.image">
             </div>
 
-            <div class="details">
+            <div class="col-sm-7">
               <h4><a style="color: black;" href="/profile?username={{u.username}}"><a>{{u.username}}</a></a></h4>
-              <p style="color: black;"> <b>Available From :</b>{{u.timeF |date:' h:mm:ss a' }} </p>
-              <p style="color:black"> <b>Available To   :</b>{{u.timeT |date:' h:mm:ss a' }}</p>
-              <h4><p style="color: black;">{{u.message}}</p></h4>
+              <p style="color: black;"> <b>Available from :</b>{{u.timeF |date:'MMM d, y, h:mm:ss a' }} <b> To:</b>{{u.timeT |date:'MMM d, y, h:mm:ss a' }}</p>
               <br>
+              <h4><p style="color: black;">{{u.message}}</p></h4>
               <!-- {{user.date_of_birth |  date:'yyyy-MM-dd' }} -->
-             </div>
-
-              <div class="buttons">    
-              <a ref="javascript:void(0)" (click)="sendRequest(u._id, u.username)" *ngIf="!u.request" style="color: black;"><button type="button" class="btn btn-primary">Like</button></a>
-              <a ref="javascript:void(0)" style="color: black;" *ngIf="u.request"><button type="" class="btn  btn-primary" disabled>Request sent</button></a>
-             <a ref="javascript:void(0)" href="/chat/{{u.username}}" *ngIf="!u.superlike" style="color: black;"><button type="button" class="btn btn-primary">Super Like</button></a>
             </div>
-            
-          <br>
+
+            <div class="col-sm-2" *ngIf="!u.friend">          
+              <a ref="javascript:void(0)" (click)="sendRequest(u._id, u.username)" *ngIf="!u.request" style="color: black;"><button type="button" class="btn btn-info">Like</button></a>
+              <a ref="javascript:void(0)" style="color: black;" *ngIf="u.request"><button type="" class="btn btn-info">Request sent</button></a>
+             <!-- <a ref="javascript:void(0)" style="color: black;" *ngIf="u.request">Request Sent</a> -->
+            </div>
+            <div class="col-sm-2" *ngIf="u.friend">          
+                <a href="/chat/{{u.username}}" style="color: black;"><button type="" class="btn btn-info">Friends</button></a>
+               <!-- <a ref="javascript:void(0)" style="color: black;" *ngIf="u.request">Request Sent</a> -->
+              </div>
+            <br><br>
+
+            <div class="col-sm-2" *ngIf="!u.friend"><br>
+                <a ref="javascript:void(0)" href="/chat/{{u.username}}" *ngIf="!u.superlike" style="color: black;"><button type="button" class="btn btn-info" >Super Like</button></a>
+            </div>
+
+          </div>
           <div class="clearfix"></div>
-          <div class="line" style="color:white"><p>**</p></div>
-          <br><br>
-        </div>
-       
+          <hr />
+         </div>
       
         
-      </div>
-
-      
-    </div>
+      </div><!--end of primary chat container-->
+     </div><!--end of matches cotainer-->
   </div>
 
 </div>
 
 
-</div>

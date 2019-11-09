@@ -32,6 +32,8 @@ export class UsersComponent implements OnInit {
     requests: [],
     friends: []
   };
+  isUseresLoaded = false;
+  friends = [];
   userAll = [];
 
   loader = true;
@@ -55,6 +57,7 @@ export class UsersComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.isUseresLoaded = false;
     let userData = this.authService.getUserData();
     this.username = userData.user.username;
     console.log(this.username);
@@ -85,8 +88,10 @@ export class UsersComponent implements OnInit {
                 }
               }
             }
+            this.isUseresLoaded = true;
               for(var i=0; i<this.user['requests'].length; i++){
                 for(var u of this.userAll){
+                  this.friends.push(this.user['friends'][i]['username']);
                   if(u['username']==this.user['requests'][i]['username']){
                     this.user['requests'][i]['image'] = u['image'];
                     break;
@@ -186,7 +191,9 @@ export class UsersComponent implements OnInit {
               if(users[i]['requests'][z].username == this.username)
                 users[i]['request'] = true;
             }
-            if (users[i].username == this.username) {
+
+            console.log(this.isUseresLoaded)
+            if (users[i].username == this.username || this.friends.indexOf(users[i].username)>=0) {
               //this.user = users[i];
               console.log(this.user);
               users.splice(i, 1);

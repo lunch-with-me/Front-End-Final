@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import {Location} from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ApiService } from 'app/services/api.service';
 import { ClassField } from '@angular/compiler/src/output/output_ast';
+//import { DOCUMENT } from '@angular/common'; 
 
 @Component({
   selector: 'app-map',
@@ -12,18 +13,23 @@ import { ClassField } from '@angular/compiler/src/output/output_ast';
 })
 
   export class MapComponent implements OnInit {
-
+//when location is not allowed for the app this coordinates will be considered
+//if its allowed the towerlocation will be considered
     location = {
-      lat: 6.839231,
-      lng: 79.981652,
+      lat: 6.7951,
+      lng: 79.9008
+      ,
       zoom: 12,
       marker: {
-        lat: 6.839231,
-        lng: 79.981652,
+        lat: 6.7951,
+        lng: 79.9008
+        ,
         draggable: true
       },
       keyword: null
     };
+    errorF = null;
+    errorT = null;
   
     timeF = localStorage.getItem('timeF');
     timeT = localStorage.getItem('timeT');
@@ -36,10 +42,13 @@ import { ClassField } from '@angular/compiler/src/output/output_ast';
       private _router: Router,
       private _activatedRoute: ActivatedRoute,
       private http: HttpClient,
-      private api: ApiService
+      private api: ApiService,
+      private document: ElementRef,
     ) { }
   
     ngOnInit() {
+      this.errorF = null;
+      this.errorT = null;
       
       navigator.geolocation.getCurrentPosition( pos => {
           this.location.lng = +pos.coords.longitude;
@@ -124,13 +133,44 @@ import { ClassField } from '@angular/compiler/src/output/output_ast';
         error => console.log(error)
       );
     }
+
+    show = false;
+    showInput(){
+      this.show = true;
+      this.errorF = null;
+      this.errorT = null;
+    }
+    hideInput(){
+      this.show = false;
+      this.errorF = null;
+      this.errorT = null;
+    }
   
 
     saveN(){
+      if(!this.timeFA || !this.timeTA){        
+        this.errorF = 'Time Required';
+        return ;
+      }
       var d = new Date();
       d.setHours(this.timeFA.substring(0,2), this.timeFA.substring(3,5), 0);
       var e = new Date();
       e.setHours(this.timeTA.substring(0,2), this.timeTA.substring(3,5), 0);
+      if(d>e){
+        this.errorF = 'Start time must be earlier than End Time';
+        return ;
+      }
+      if( e<new Date() ){
+        if(d<new Date())
+          this.errorF = 'Invalid Time';
+        this.errorT = 'Invalid Time';
+        return ;
+      }
+      if(d<new Date()){
+        this.errorF = 'Invalid Time';
+        return ;
+      }
+      this.hideInput();
       this.timeF = d.toISOString();
       this.timeT = e.toISOString();
       console.log(e);

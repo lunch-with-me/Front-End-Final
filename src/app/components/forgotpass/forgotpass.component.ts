@@ -10,6 +10,7 @@ import { ApiService } from 'app/services/api.service';
 })
 export class ForgotpassComponent implements OnInit {
   myForm: FormGroup;
+  msg=null;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -37,8 +38,12 @@ export class ForgotpassComponent implements OnInit {
      this.api.forgotpasswordSentanEmail(this.myForm.value)
             .subscribe( data => {
                 console.log("reset password is succeeded");
+                this.msg="Send an email";
           },
-              error =>    this. flashMessagesService.show('please try again later!', { cssClass: 'alert-danger' } )
+              error =>    {this. flashMessagesService.show('please try again later!', { cssClass: 'alert-danger' } )
+              
+              this.msg=null;;
+        }
       
         );
        

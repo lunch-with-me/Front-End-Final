@@ -1,10 +1,16 @@
 <div class="container">
 <form  [formGroup]="registerForm">
+    <div class="alert alert-danger" role="alert" *ngIf="error">
+        {{error}}
+      </div>
     
         <h2 class="page-header">Register Details</h2>
 
     
 
+        <div class="alert alert-danger" role="alert" *ngIf="isValid('fullname')">
+            Name is Invalid
+          </div>
       <div class="form-group">
         <label for="inputFullName" class="col-lg-2 control-label">Full Name</label>
         <div class="col-lg-10">
@@ -12,7 +18,10 @@
           <br>
         </div>
       </div>
-     
+
+      <div class="alert alert-danger" role="alert" *ngIf="isValid('self_description') || (error && !registerForm.value.self_description)">
+          Description is Invalid
+        </div>
     
       <div class="form-group">
         <label for="textArea" class="col-lg-2 control-label">Self Description</label>
@@ -23,13 +32,17 @@
         </div>
       </div>
 
+
+      <div class="alert alert-danger" role="alert" *ngIf="error && !registerForm.value.gender">
+          Gender is Invalid
+        </div>
       <div class="form-group">
         <label class="col-lg-2 control-label">Gender</label>
         <div class="col-lg-10">
           <div class="radio">
-            <input type="radio"  class="form-contro"  name="gender"  value="Male" formControlName="gender"> Male<br>
-           <input type="radio"   class="form-contro" name="gender" value="Female"formControlName="gender"> Female<br>
-          <input type="radio"   class="form-contro" name="gender" value="Other"formControlName="gender"> Other
+            <input type="radio"  class="form-contro"  name="gender"  value="Male" formControlName="gender" required> Male<br>
+           <input type="radio"   class="form-contro" name="gender" value="Female" formControlName="gender" required> Female<br>
+          <input type="radio"   class="form-contro" name="gender" value="Other" formControlName="gender" required> Other
             </div>
         </div>
       </div> 
@@ -60,6 +73,9 @@
           
         </div>
       </div> -->
+      <div class="alert alert-danger" role="alert" *ngIf="error && !registerForm.value.dob">
+          Date of birth is Invalid
+        </div>
       <div class="form-group">
           <label for="textArea" class="col-lg-2 control-label">DOB</label>
         <div class="col-lg-10">
@@ -68,6 +84,9 @@
       </div>
       </div>
 
+      <div class="alert alert-danger" role="alert" *ngIf="error && !b64">
+          Insert an Image
+        </div>
       <div class="form-group">
         <label for="textArea" class="col-lg-2 control-label">Image</label>
       <div class="col-lg-10">
@@ -76,7 +95,11 @@
     <br>
     </div>
     </div>
+    
 
+    <div class="alert alert-danger" role="alert" *ngIf="error && (!Interest.Food1 && !Interest.Food2 && !Interest.Food3 && !Interest.Food4 && !Interest.Food5 && !Interest.Food6 && !Interest.Hobbies1 && !Interest.Hobbies2 && !Interest.Hobbies3 && !Interest.Hobbies4 && !Interest.Hobbies5 && !Interest.Hobbies6 && !Interest.Hobbies7 && !Interest.Hobbies8 && !Interest.Hobbies9 && !Interest.Drinks1 && !Interest.Drinks2 && !Interest.Drinks3)">
+        Fill atleast one one Interest
+      </div>
     <div class="form-group">
       <label for="textArea" class="col-lg-2 control-label">Interest</label>
     <div class="col-lg-10">
@@ -107,6 +130,7 @@
   </div>
   </div>
 
+  
   <div class="form-group">
       <label for="myProf" class="col-lg-2 control-label">My Profession</label>
     <div class="col-lg-10">
@@ -123,6 +147,7 @@
       <br>
   </div>
   </div>
+
 
   <div class="form-group">
       <label for="intProf" class="col-lg-2 control-label">Interested Profession</label>

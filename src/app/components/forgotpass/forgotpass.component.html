@@ -6,7 +6,9 @@
 
     
          
-        
+      <div *ngIf="msg" class="alert alert-success" role="alert">
+{{msg}}
+      </div>    
   <div class="form-group">
     <label for="password">Email</label>
 
@@ -17,7 +19,8 @@
   <div style="text-align: center; color:red">                
     {{successMessage}}
   </div>
- 
+
+  
          
         
 

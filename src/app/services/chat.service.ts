@@ -76,6 +76,7 @@ export class ChatService {
     return observableReq;
   }
 
+  //Chat List
   getUserList(): any {
     let url = this.chaListURL;
 
@@ -95,6 +96,7 @@ export class ChatService {
     return observableReq;
   }
 
+  //Get All Users
   getAllUserList(): any {
     let url = this.usersUrl + '/all';
 
@@ -114,6 +116,7 @@ export class ChatService {
     return observableReq;
   }
 
+  
   sendRequest(id, username){
     let url = this.usersUrl + '/request/' + id +'/' + username;
 

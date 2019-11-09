@@ -9,6 +9,7 @@ export class ApiService {
 
   host = 'http://localhost:8080/';
 
+  //Save Location & meeting time
   map(lat, lon){
     console.log(lat);
     return this._http.get(this.host + 'users/locationAdd/' + this.auth.getUserData()['user']['id'] + '?lng=' + lon + '&lat='+lat,{
@@ -23,7 +24,7 @@ forgotpasswordSentanEmail(body:any){
   return this._http.post(this.host+ 'users/forgotpasswordEmailVerification', body,{});
 }
 
-
+//Register 2
 submitRegi(body:any){
   return this._http.post(this.host + 'users/registerdetails', body,{
     observe:'body',

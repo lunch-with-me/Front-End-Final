@@ -47,35 +47,26 @@
               <header>
 <!-- pick a time-->
 
-                  <div id="myModal" class="modal fade" role="dialog">
-                      <div class="modal-dialog">
-                    
-                        <!-- Modal content-->
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Select Time</h4>
-                          </div>
-                          <div class="modal-body">
-                                <label>From</label><input type="time" name="pickuptime" [(ngModel)]="timeFA"><br/>
-                                <label>To</label><input type="time" name="pickuptime" [(ngModel)]="timeTA">
-                          </div>
-                          <div class="modal-footer">
-                              <button type="button" class="btn btn-default" (click)="saveN()" data-dismiss="modal">Save</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                          </div>
-                        </div>
-                    
-                      </div>
-                    </div>
+      
 
                       <h3>picked time</h3>
-                      <h5 *ngIf="!now">From: {{timeF |  date:'yyyy-MM-dd  H:mm:ss' }}</h5>
-                      <h5 *ngIf="!now">To: {{timeT |  date:'yyyy-MM-dd  H:mm:ss' }}</h5>
-                      <h5 *ngIf="now">At: {{timeF |  date:'yyyy-MM-dd  H:mm:ss' }}</h5>
-                      <h5 *ngIf="now">At: {{timeT |  date:'yyyy-MM-dd  H:mm:ss' }}</h5>
+                      <h5 *ngIf="!now && !show">From: {{timeF |  date:'yyyy-MM-dd  H:mm:ss' }}</h5>
+                      <h5 *ngIf="!now && !show">To: {{timeT |  date:'yyyy-MM-dd  H:mm:ss' }}</h5>
+                      <h5 *ngIf="now && !show">At: {{timeF |  date:'yyyy-MM-dd  H:mm:ss' }}</h5>
+                      <h5 *ngIf="now && !show">At: {{timeT |  date:'yyyy-MM-dd  H:mm:ss' }}</h5>
+
+                      <div *ngIf="errorF" class="alert alert-danger" role="alert">
+                          {{errorF}}
+                        </div>
+                      <h5 *ngIf="show"><label>From</label><input type="time" name="pickuptime" [(ngModel)]="timeFA"></h5>
+                      <div *ngIf="errorT" class="alert alert-danger" role="alert">
+                          {{errorT}}
+                        </div>
+                      <h5 *ngIf="show"><label>To</label><input type="time" name="pickuptime" [(ngModel)]="timeTA"></h5>
+                      <button *ngIf="show" type="button" class="btn btn-default" (click)="saveN()">Save</button>
+                      <button *ngIf="show" type="button" class="btn btn-default" (click)="hideInput()">Cancel</button>
                       <!-- <p><a href="/find">Change</a></p> -->
-                      <a href="javascript:void(0)"><h4 data-toggle="modal" data-target="#myModal">Click here to pick a time</h4></a>
+                      <a *ngIf="!show" href="javascript:void(0)"><h4 (click)="showInput()">Click here to pick a time</h4></a>
               
                     </header>
                   
@@ -115,14 +106,15 @@
                           </agm-map>
                       </div>
               </div>
-              <button bg="primary" (click)="submit();" style="height: 40px; margin-top: 10px; margin-left:50%; height: 40px; font-size: 14px; background: #ff9900;" *ngIf="timeF && timeT">
+              <button bg="primary" (click)="submit();" style="height: 40px; margin-top: 10px; margin-left:50%; height: 40px; font-size: 14px; background: #ff9900;" *ngIf="timeF && timeT && !show">
                       <i class="fa fa-search"></i>
                       <span> Submit</span>
                     </button>
-                    <button bg="primary" style="height: 40px; margin-top: 10px; margin-left:50%; height: 40px; font-size: 14px; background: #3a2403;" *ngIf="!(timeF && timeT)" disabled>
+                    <button bg="primary" style="height: 40px; margin-top: 10px; margin-left:50%; height: 40px; font-size: 14px; background: #3a2403;" *ngIf="!(timeF && timeT) || show" disabled>
                       <i class="fa fa-search"></i>
                       <span> Submit</span>
                     </button>
+                    
      
             
             

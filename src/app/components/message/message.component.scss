@@ -33,3 +33,12 @@
     @include opacity(1);
   }
 }
+//message sending platform color
+.panel-warning{
+  border-color: black;
+  background-color: blue;
+}
+.panel-info{
+  border-color: black;
+  background-color: rgb(182, 182, 231);
+}

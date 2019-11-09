@@ -38,8 +38,9 @@ export class RegisterDetailsComponent implements OnInit {
     Drinks3: false
   };
   img = null;
-  myProf = null;
-  intProf= null;
+  myProf = 'Engineer';
+  intProf= 'Engineer';
+  error= null;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -82,15 +83,25 @@ export class RegisterDetailsComponent implements OnInit {
     }
 
     this.registerForm = this.formBuilder.group({
-      fullname: new FormControl(null, Validators.required),
-   gender: new FormControl(null),
-    dob:new FormControl(null, Validators.required),
-   self_description:new FormControl(null, Validators.required),
+      fullname: ['', [ Validators.required, Validators.minLength(4), Validators.maxLength(20) ]],
+      self_description: ['', [ Validators.required , Validators.minLength(4) ]],
+      gender: ['', [ Validators.required]],
+      dob: ['']
+      // image:['', [ Validators.required ]],
+      // myProf:['', [ Validators.required ]],
+      // intProf:['', [ Validators.required]]
+
+    });
+
+  //     fullname: new FormControl(null, Validators.required),
+  //  gender: new FormControl(null),
+  //   dob:new FormControl(null, Validators.required),
+  //  self_description:new FormControl(null, Validators.required),
    
   // telephone: ['', [ Validators.required, Validators.minLength(9), Validators.maxLength(15) ]],
   //interest:new FormControl(null, Validators.required),
   //image:new FormControl(null),
-    });
+    
   }
 
   checkLoggedIn(): Boolean {
@@ -113,6 +124,10 @@ export class RegisterDetailsComponent implements OnInit {
   }
   b64 = null;
 
+  isValid(controlName) {
+    return this.registerForm.get(controlName).invalid && this.registerForm.get(controlName).touched;
+  }
+
   onFileChanged(event) {
 
     let reader = new FileReader();
@@ -129,11 +144,13 @@ export class RegisterDetailsComponent implements OnInit {
 
 
   register() {
-    //console.log(this.Interest);
+    console.log(this.Interest);
 
-    if (!this.registerForm.valid) {
+    if (!this.registerForm.valid || !this.b64 || (!this.Interest.Food1 && !this.Interest.Food2 && !this.Interest.Food3 && !this.Interest.Food4 && !this.Interest.Food5 && !this.Interest.Food6 && !this.Interest.Hobbies1 && !this.Interest.Hobbies2 && !this.Interest.Hobbies3 && !this.Interest.Hobbies4 && !this.Interest.Hobbies5 && !this.Interest.Hobbies6 && !this.Interest.Hobbies7 && !this.Interest.Hobbies8 && !this.Interest.Hobbies9 && !this.Interest.Drinks1 && !this.Interest.Drinks2 && !this.Interest.Drinks3)) {
     //  this._myservice.submitRegi(this.myForm.value)
-      console.log('Invalid form'); return;
+    console.log(this.registerForm)
+      this.error = 'Invalid form';
+       return;
           //   this._router.navigate(['/']);  
     }
 

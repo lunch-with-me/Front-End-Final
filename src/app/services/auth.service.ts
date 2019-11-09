@@ -15,6 +15,7 @@ export class authService {
 
   constructor(private http: Http) { }
 
+  //Register1
   registerUser(user): any {
     console.log(user)
     let url: string = this.apiUrl + "/register";
@@ -32,6 +33,7 @@ export class authService {
   }
   
 
+  //Login
   authenticateUser(user): any {
     let url: string = this.apiUrl + "/authenticate";
 
@@ -46,6 +48,7 @@ export class authService {
 
     return observableReq;
   }
+
 
 // get logged in person details
   getProfile(username): any {
@@ -67,7 +70,7 @@ export class authService {
   }
 
 
-
+//Save Data to LocalStorage
   storeUserData(token, users, email): void {
     localStorage.setItem("token", token);
     localStorage.setItem("user", JSON.stringify(users));
@@ -85,6 +88,7 @@ export class authService {
       localStorage.setItem('pickupLat', user.pickupLat)
   }
 
+  //Get User Data from LS
   getUserData(): any {
     this.loadCredentials();
     let jUser = JSON.parse(this.user);
@@ -93,12 +97,14 @@ export class authService {
     return jData;
   }
 
+  //Get User Data & Token from LS
   loadCredentials(): void {
     let token = localStorage.getItem("token");
     let user = localStorage.getItem("user");
     this.authToken = token;
     this.user = user;
   }
+
 
   loggedIn(): boolean {
     return tokenNotExpired();
@@ -135,6 +141,7 @@ export class authService {
 
   }
 
+  //Get UserDeatils by uername
   getuserdetails():  any {
     let url: string = this.apiUrl + "/userdetails/:id/:username";
     // prepare the request
