@@ -7,24 +7,31 @@
         <h2 class="page-header">Register Details</h2>
 
     
-
+  
+<!-- 
         <div class="alert alert-danger" role="alert" *ngIf="isValid('fullname')">
             Name is Invalid
-          </div>
+          </div> -->
       <div class="form-group">
+        
         <label for="inputFullName" class="col-lg-2 control-label">Full Name</label>
+        <span style="text-align: center; color:red" *ngIf="isValid('fullname')">Name is Invalid
+          </span>
         <div class="col-lg-10">
           <input type="text" class="form-control" id="inputFullName" placeholder="Full Name" formControlName="fullname" autofocus="true">
           <br>
+           
         </div>
       </div>
 
-      <div class="alert alert-danger" role="alert" *ngIf="isValid('self_description') || (error && !registerForm.value.self_description)">
+      <!-- <div class="alert alert-danger" role="alert" *ngIf="isValid('self_description') || (error && !registerForm.value.self_description)">
           Description is Invalid
-        </div>
+        </div> -->
     
       <div class="form-group">
         <label for="textArea" class="col-lg-2 control-label">Self Description</label>
+        <span style="text-align: center; color:red" *ngIf="isValid('self_description') || (error && !registerForm.value.self_description)">Add lenghty Description
+          </span>
         <div class="col-lg-10">
           <textarea class="form-control" rows="3" id="textArea" formControlName="self_description"></textarea>
           <span class="help-block">A longer block of help text that breaks onto a new line and may extend beyond one line.</span>
@@ -33,11 +40,13 @@
       </div>
 
 
-      <div class="alert alert-danger" role="alert" *ngIf="error && !registerForm.value.gender">
+      <!-- <div class="alert alert-danger" role="alert" *ngIf="error && !registerForm.value.gender">
           Gender is Invalid
-        </div>
+        </div> -->
       <div class="form-group">
         <label class="col-lg-2 control-label">Gender</label>
+        <span style="text-align: center; color:red" *ngIf="error && !registerForm.value.gender">Gender is Required
+          </span>
         <div class="col-lg-10">
           <div class="radio">
             <input type="radio"  class="form-contro"  name="gender"  value="Male" formControlName="gender" required> Male<br>
@@ -73,22 +82,27 @@
           
         </div>
       </div> -->
-      <div class="alert alert-danger" role="alert" *ngIf="error && !registerForm.value.dob">
+      <!-- <div class="alert alert-danger" role="alert" *ngIf="error && !registerForm.value.dob">
           Date of birth is Invalid
-        </div>
+        </div> -->
       <div class="form-group">
           <label for="textArea" class="col-lg-2 control-label">DOB</label>
+          <span style="text-align: center; color:red" *ngIf="error && !registerForm.value.dob">DOB Required
+            </span>
+          
         <div class="col-lg-10">
       <input type="date" class="form-control" id="dob" formControlName="dob" >
       <br>
       </div>
       </div>
 
-      <div class="alert alert-danger" role="alert" *ngIf="error && !b64">
+      <!-- <div class="alert alert-danger" role="alert" *ngIf="error && !b64">
           Insert an Image
-        </div>
+        </div> -->
       <div class="form-group">
         <label for="textArea" class="col-lg-2 control-label">Image</label>
+        <span style="text-align: center; color:red" *ngIf="error && !b64">Insert an Image
+          </span>
       <div class="col-lg-10">
     <input type="file" id="image" name="image" value="image"  (change)="onFileChanged($event)" accept="image/*" [(ngModel)]="img" [ngModelOptions]="{standalone: true}">
     <img src={{b64}} style="max-width: 80%; max-height: 300px;"/>
@@ -97,11 +111,13 @@
     </div>
     
 
-    <div class="alert alert-danger" role="alert" *ngIf="error && (!Interest.Food1 && !Interest.Food2 && !Interest.Food3 && !Interest.Food4 && !Interest.Food5 && !Interest.Food6 && !Interest.Hobbies1 && !Interest.Hobbies2 && !Interest.Hobbies3 && !Interest.Hobbies4 && !Interest.Hobbies5 && !Interest.Hobbies6 && !Interest.Hobbies7 && !Interest.Hobbies8 && !Interest.Hobbies9 && !Interest.Drinks1 && !Interest.Drinks2 && !Interest.Drinks3)">
+    <!-- <div class="alert alert-danger" role="alert" *ngIf="error && (!Interest.Food1 && !Interest.Food2 && !Interest.Food3 && !Interest.Food4 && !Interest.Food5 && !Interest.Food6 && !Interest.Hobbies1 && !Interest.Hobbies2 && !Interest.Hobbies3 && !Interest.Hobbies4 && !Interest.Hobbies5 && !Interest.Hobbies6 && !Interest.Hobbies7 && !Interest.Hobbies8 && !Interest.Hobbies9 && !Interest.Drinks1 && !Interest.Drinks2 && !Interest.Drinks3)">
         Fill atleast one one Interest
-      </div>
+      </div> -->
     <div class="form-group">
       <label for="textArea" class="col-lg-2 control-label">Interest</label>
+      <span style="text-align: center; color:red" *ngIf="error && (!Interest.Food1 && !Interest.Food2 && !Interest.Food3 && !Interest.Food4 && !Interest.Food5 && !Interest.Food6 && !Interest.Hobbies1 && !Interest.Hobbies2 && !Interest.Hobbies3 && !Interest.Hobbies4 && !Interest.Hobbies5 && !Interest.Hobbies6 && !Interest.Hobbies7 && !Interest.Hobbies8 && !Interest.Hobbies9 && !Interest.Drinks1 && !Interest.Drinks2 && !Interest.Drinks3)">Pick atleast one interest
+        </span>
     <div class="col-lg-10">
       <h4><b>Career Interest Areas</b></h4>
       <input type="checkbox" name="Food1" value="Conventional" [(ngModel)]="Interest.Food1" [ngModelOptions]="{standalone: true}">Conventional<br>
@@ -122,10 +138,10 @@
       <input type="checkbox" name="Hobbies7" value="Collecting" [(ngModel)]="Interest.Hobbies7" [ngModelOptions]="{standalone: true}">Collecting <br>
       <input type="checkbox" name="Hobbies8" value="Music" [(ngModel)]="Interest.Hobbies8" [ngModelOptions]="{standalone: true}">Music<br>
       <input type="checkbox" name="Hobbies9" value="Video Games" [(ngModel)]="Interest.Hobbies9" [ngModelOptions]="{standalone: true}">Video Games<br><br>
-      <h6>Type of Foods</h6>
-      <input type="checkbox" name="Drinks1" value="Drinks1" [(ngModel)]="Interest.Drinks1" [ngModelOptions]="{standalone: true}">Drinks1<br>
-      <input type="checkbox" name="Drinks2" value="Drinks2" [(ngModel)]="Interest.Drinks2" [ngModelOptions]="{standalone: true}">Drinks2<br>
-      <input type="checkbox" name="Drinks3" value="Drinks3" [(ngModel)]="Interest.Drinks3" [ngModelOptions]="{standalone: true}">Drinks3<br><br>
+      <h4><b><u>Food Prefference</u></b></h4>
+      <input type="checkbox" name="Drinks1" value="Drinks1" [(ngModel)]="Interest.Drinks1" [ngModelOptions]="{standalone: true}">Vegetarian<br>
+      <input type="checkbox" name="Drinks2" value="Drinks2" [(ngModel)]="Interest.Drinks2" [ngModelOptions]="{standalone: true}">Half Vegetarian<br>
+      <input type="checkbox" name="Drinks3" value="Drinks3" [(ngModel)]="Interest.Drinks3" [ngModelOptions]="{standalone: true}">Non Vegetarian<br><br>
   <br>
   </div>
   </div>
@@ -144,14 +160,16 @@
             <option value="Sprotman">Sprotman</option>
             <option value="Musician">Musician</option>
           </select>
+          <br>
       <br>
   </div>
   </div>
 
-
+  <br><br>
   <div class="form-group">
-      <label for="intProf" class="col-lg-2 control-label">Interested Profession</label>
+     <p> <label for="intProf" class="col-lg-2 control-label"><br>Interested Profession</label></p>
     <div class="col-lg-10">
+      <br>
         <select name="intProf" [(ngModel)]="intProf" [ngModelOptions]="{standalone: true}">
             <option value="Engineer">Engineer</option>
             <option value="Doctor">Doctor</option>
@@ -166,10 +184,10 @@
   </div>
   </div>
 
-  
 
       <div class="form-group">
         <div class="col-lg-10 col-lg-offset-2">
+          <br><br>
           <button type="reset" class="btn btn-default">Cancel</button>
           <button type="submit" id="btnSubmit"class="btn" (click)="register()">save</button>
         </div>

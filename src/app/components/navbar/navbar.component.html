@@ -22,11 +22,11 @@
         <li *ngIf="!authService.loggedIn()" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" (click)="onNavigate()"><a routerLink="/">Home</a></li>
         <li *ngIf="authService.loggedIn()" routerLinkActive="active" (click)="onNavigate()"><a routerLink="/map">Map</a></li>
         <!-- <li *ngIf="authService.loggedIn()" routerLinkActive="active" (click)="onNavigate()"><a routerLink="/find">Find</a></li> -->
-        <li *ngIf="authService.loggedIn()" routerLinkActive="active" (click)="onNavigate()"><a routerLink="/users">Users</a></li>
+        <li *ngIf="authService.loggedIn()" routerLinkActive="active" (click)="onNavigate()"><a routerLink="/users">Friend Requests</a></li>
         <li *ngIf="authService.loggedIn()" routerLinkActive="active" (click)="onNavigate()"><a routerLink="/chat">Chat</a></li>
         <li *ngIf="authService.loggedIn()" routerLinkActive="active" (click)="onNavigate()"><a routerLink="/notification">notificaton</a></li>
-        <li *ngIf="authService.loggedIn()" routerLinkActive="active" (click)="onNavigate()"><a routerLink="/likes">Super Like</a></li>
-        <li *ngIf="authService.loggedIn()" routerLinkActive="active" (click)="onNavigate()"><a routerLink="/offers">Offers</a></li>
+        <!-- <li *ngIf="authService.loggedIn()" routerLinkActive="active" (click)="onNavigate()"><a routerLink="/likes">Super Like</a></li>
+        <li *ngIf="authService.loggedIn()" routerLinkActive="active" (click)="onNavigate()"><a routerLink="/offers">Offers</a></li> -->
         
       </ul>
 
