@@ -81,6 +81,7 @@ export class UsersComponent implements OnInit {
           data => {
             this.user  = data['users'][0];
             for(var i=0; i<this.user['friends'].length; i++){
+              this.friends.push(this.user['friends'][i]['username']);
               for(var u of this.userAll){
                 if(u['username']==this.user['friends'][i]['username']){
                   this.user['friends'][i]['image'] = u['image'];
@@ -91,7 +92,6 @@ export class UsersComponent implements OnInit {
             this.isUseresLoaded = true;
               for(var i=0; i<this.user['requests'].length; i++){
                 for(var u of this.userAll){
-                  this.friends.push(this.user['friends'][i]['username']);
                   if(u['username']==this.user['requests'][i]['username']){
                     this.user['requests'][i]['image'] = u['image'];
                     break;

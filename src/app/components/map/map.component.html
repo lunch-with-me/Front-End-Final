@@ -55,7 +55,7 @@
                       <h5 *ngIf="now && !show">At: {{timeF |  date:'yyyy-MM-dd  H:mm:ss' }}</h5>
                       <h5 *ngIf="now && !show">At: {{timeT |  date:'yyyy-MM-dd  H:mm:ss' }}</h5>
 
-                      <div *ngIf="errorF" class="alert alert-danger" role="alert">
+                      <div *ngIf="errorF" class="alert alert-danger" role="alert" >
                           {{errorF}}
                         </div>
                       <h5 *ngIf="show"><label>From</label><input type="time" name="pickuptime" [(ngModel)]="timeFA"></h5>
