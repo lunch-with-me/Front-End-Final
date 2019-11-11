@@ -32,24 +32,28 @@ import { SugestedProfileComponent } from './components/sugested-profile/sugested
 import { OffersComponent } from './offers/offers.component';
 import { Angular2SocialLoginModule } from "angular2-social-login";
 import { ForgotpassComponent } from './components/forgotpass/forgotpass.component';
+import { AngularFireModule } from 'angularfire2';
+import { environment } from 'environments/environment';
+import { NotificationService } from './components/navbar/notification.service';
+import { AngularFireDatabase } from 'angularfire2/database';
 // import { NgbDate, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 //import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 const appRoutes: Routes = [
   { path: '', component: LoginComponent },
-  { path: 'home', component: HomeComponent },
+  { path: 'home',canActivate: [AuthGuard], component: HomeComponent },
   { path: 'find', component: FindComponent },
-  { path: 'users', component: UsersComponent },
-  { path: 'map', component: MapComponent },
+  { path: 'users',canActivate: [AuthGuard], component: UsersComponent },
+  { path: 'map', canActivate: [AuthGuard],component: MapComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'register2', component: Register2Component },
   { path: 'login', component: LoginComponent },
   { path: 'active', component: ActiveComponent },
   { path: 'registerdetails', component: RegisterDetailsComponent },
-  { path: 'forgotpassword', component: ForgotPasswordComponent },
-  { path: 'forgotpass', component: ForgotpassComponent },//get email address
-  { path: 'profile', component: ProfileComponent },
+  { path: 'forgotpassword',canActivate: [AuthGuard], component: ForgotPasswordComponent },
+  { path: 'forgotpass', canActivate: [AuthGuard],component: ForgotpassComponent },//get email address
+  { path: 'profile',canActivate: [AuthGuard], component: ProfileComponent },
   { path: 'sugestedprofile', component: SugestedProfileComponent },
   { path: 'offers', component: OffersComponent },
   { path: 'chat', canActivate: [AuthGuard], children: [
@@ -101,6 +105,7 @@ let providers = {
     FormsModule,
     Angular2SocialLoginModule,
     ReactiveFormsModule,
+    AngularFireModule.initializeApp(environment.firebase),
   // NgbModule,
     //NgbDate,
     HttpModule,
@@ -116,6 +121,8 @@ let providers = {
     AuthGuard,
     authService,
     ChatService,
+    NotificationService,
+    AngularFireDatabase,
     ApiService
   ],
   bootstrap: [AppComponent]

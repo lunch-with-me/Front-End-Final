@@ -5,6 +5,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Message } from "../../models/message.model";
 import { ChatService } from "../../services/chat.service";
 import { authService } from "../../services/auth.service";
+import { NotificationService } from '../navbar/notification.service';
 
 @Component({
   selector: 'app-chat-room',
@@ -29,20 +30,32 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
   chatAccess = false;
   isFriend = false;
 
+  superLike = false;
+  superLikeUsername;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private formBuilder: FormBuilder,
     private el: ElementRef,
     private authService: authService,
-    private chatService: ChatService
+    private chatService: ChatService,
+    private notiService: NotificationService
   ) { }
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
       this.chatWith = params.chatWith;
     });
-
+    
+    this.route.queryParams.subscribe(val => {
+      try {
+        this.superLike = val.superLike as boolean;
+        this.superLikeUsername = val.username;
+      } catch (e) {
+        console.log(e);
+      }
+    });
     let username = JSON.parse(localStorage.getItem("user"))['username']
     this.authService.getProfile(username)
       .subscribe(data => {
@@ -227,6 +240,16 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
   }
 
   onSendSubmit(): void {
+    console.log(this.superLike);
+    console.log(this.superLikeUsername);
+    
+    if (this.superLike && this.superLikeUsername) {
+      this.notiService.superLikeNotification(null, this.superLikeUsername);
+    }
+    else {
+      this.notiService.chatNotification(null, this.chatWith);
+    }
+
     if(!this.isFriend){
       this.chatAccess = false;
     }

@@ -6,6 +6,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Message } from "../../models/message.model";
 import { ChatService } from "../../services/chat.service";
 import { authService } from "../../services/auth.service";
+import { NotificationService } from '../navbar/notification.service';
+import { DebugContext } from '@angular/core/src/view';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -44,7 +46,9 @@ export class HomeComponent implements OnInit {
     private el: ElementRef,
     private authService: authService,
     private chatService: ChatService,
-    private http: HttpClient
+    private http: HttpClient, 
+    private noti: NotificationService
+
   ) { }
 
   new = false;
@@ -118,9 +122,14 @@ export class HomeComponent implements OnInit {
   }
 
   sendRequest(id, username){
+    console.log('send request============================')
     console.log(username);
+    console.log(id);
+    console.log('enddddddddddddddddddddddddd')
     this.chatService.sendRequest(id, username).subscribe(
       data => {
+        console.log("Send request response")
+        console.log(data)
         for (let i = 0; i < this.userList.length; i++) {
           if(this.userList[i]['username'] == username)
           this.userList[i]['request'] = true;
@@ -129,6 +138,7 @@ export class HomeComponent implements OnInit {
       },
       error => console.log(error)
     );
+    this.noti.likeNotification(id, username);
   }
 
   acceptRequest(id, username){
@@ -192,6 +202,7 @@ export class HomeComponent implements OnInit {
         this.CounterL();
         if (data.success == true) {
           let users = data.users;
+          console.log(users)
           for (let i = 0; i < users.length; i++) {
             //console.log(users[i])
             users[i]['request'] = false;
@@ -221,16 +232,16 @@ export class HomeComponent implements OnInit {
           //     }
           // }
 
-          for (let i = 0; i < users.length; i++) {
-            for (let j = 0; j < this.user.requests.length; j++) {  
-              if (users[i].username == this.user.requests[j].username) {
-                users.splice(i, 1);
-                i--;
-                break;
-              }
-            }
+        //   for (let i = 0; i < users.length; i++) {
+        //     for (let j = 0; j < this.user.requests.length; j++) {  
+        //       if (users[i].username == this.user.requests[j].username) {
+        //         users.splice(i, 1);
+        //         i--;
+        //         break;
+        //       }
+        //     }
           
-        }
+        // }
         console.log('users');
           console.log(users)
           this.userList = users.sort(this.compareByUsername);
@@ -249,7 +260,7 @@ export class HomeComponent implements OnInit {
                     }
                   }
                   if (flaggy == 0) {
-                    this.userList.push(onlineUsr);
+                    //this.userList.push(onlineUsr);
                     this.userList.sort(this.compareByUsername);
                   }
                 }
@@ -271,7 +282,6 @@ export class HomeComponent implements OnInit {
 
               this.currentOnline = this.checkOnline(this.chatWith);
             });
-
           this.chatService.getActiveList();
         } else {
           //this.onNewConv("chat-room");

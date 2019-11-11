@@ -6,6 +6,7 @@ import { Message } from "../../models/message.model";
 import { ChatService } from "../../services/chat.service";
 import { authService } from "../../services/auth.service";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { NotificationService } from '../navbar/notification.service';
 
 @Component({
   selector: 'app-users',
@@ -53,7 +54,8 @@ export class UsersComponent implements OnInit {
     private el: ElementRef,
     private authService: authService,
     private chatService: ChatService,
-    private http: HttpClient
+    private http: HttpClient,
+    private noti: NotificationService
   ) { }
 
   ngOnInit() {
@@ -74,7 +76,7 @@ export class UsersComponent implements OnInit {
 
     this.connectToChat();
 
-    this.http.get('http://localhost:8080/users/all', { headers: new HttpHeaders({Authorization: localStorage.getItem('token')}) } ).subscribe(
+    this.http.get('http://localhost:8080/users/allusers', { headers: new HttpHeaders({Authorization: localStorage.getItem('token')}) } ).subscribe(
       data => {
         this.userAll  = data['users'];
         this.http.get('http://localhost:8080/users', { headers: new HttpHeaders({Authorization: localStorage.getItem('token')}) } ).subscribe(
@@ -130,6 +132,7 @@ export class UsersComponent implements OnInit {
     console.log(username);
     this.chatService.acceptRequest(id, username).subscribe(
       data => {
+        this.noti.acceptNotification(null, username);
         console.log(this.userList);
         this.ngOnInit();
       },
@@ -388,4 +391,3 @@ export class UsersComponent implements OnInit {
   }
 
 }
-

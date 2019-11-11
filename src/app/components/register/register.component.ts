@@ -48,7 +48,7 @@ export class RegisterComponent implements OnInit {
           if (data.success == true) {
                // this.authService.storeUserData(data.token, data.user, data.email);
                 localStorage.setItem("email", this.registerForm.value['email']);
-                this.flashMessagesService.show(data.msg, {cssClass: "alert-success", timeout: 999999});
+                this.flashMessagesService.show(data.msg, {cssClass: "alert-success", timeout: 7000});
           // this.authService.authenticateUser(this.registerForm.value)
           // .subscribe(data => {
           //   if (data.success == true) {

@@ -3,7 +3,9 @@ import { Router } from '@angular/router';
 
 import { authService } from "../../services/auth.service";
 import { ChatService } from "../../services/chat.service";
-
+import { NotificationService } from './notification.service';
+import { Observable } from 'rxjs';
+import { AngularFireList } from 'angularfire2/database';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -12,16 +14,25 @@ import { ChatService } from "../../services/chat.service";
 
 export class NavbarComponent implements OnInit {
   username: string;
+  notiList: Observable<any[]>;
+  notiCount = 0;
   constructor(
     private authService: authService,
     private router: Router,
     private chatService: ChatService,
+    private notiService: NotificationService,
     private el: ElementRef
   ) { }
 
   ngOnInit() {
+    this.notiList = this.notiService.getNotifications();
+    this.notiList.subscribe(val => {
+      this.notiCount = val.filter(x => x.payload.val().isSeen === false).length;
+    });
   }
-
+  setSeen(oid){
+    this.notiService.setSeenTrue(oid);
+  }
   onLogoutClick(): boolean {
     this.authService.logout();
     this.chatService.disconnect();

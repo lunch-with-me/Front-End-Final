@@ -8,4 +8,13 @@ export const environment = {
   production: false,
   chatUrl: BASE_URL,
   backendUrl: BASE_URL,
+   firebase: {
+    apiKey: "AIzaSyAkNZFuzIva8UL4GNmCtUN9OUEQB1CxFBI",
+    authDomain: "notification-fde31.firebaseapp.com",
+    databaseURL: "https://notification-fde31.firebaseio.com",
+    projectId: "notification-fde31",
+    storageBucket: "notification-fde31.appspot.com",
+    messagingSenderId: "171776216197",
+    appId: "1:171776216197:web:627b266a885883b0"
+  }
 };
